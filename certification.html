@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certifications - Harish's Console</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(-45deg, #667eea, #cab6b6, #365fcd, #667eea);
+      background-size: 400% 400%;
+      animation: gradientShift 10s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .glow-card {
+      transition: box-shadow 0.4s ease, transform 0.4s ease, background 0.4s ease;
+    }
+
+    .glow-card:hover {
+      background: linear-gradient(145deg, #dd89a64d, #8b77e240, #d879a140);
+      box-shadow: 0 0 25px 10px rgba(127, 90, 240, 0.3),
+                  0 0 40px 15px rgba(226, 204, 204, 0.2),
+                  0 0 60px 20px rgba(30, 138, 133, 0.2);
+      transform: translateY(-5px) scale(1.02);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+  <header class="bg-gray-800 text-white p-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold">Certifications</h1>
+    <nav class="space-x-4">
+      <a href="index.html" class="hover:underline">Home</a>
+      <a href="skills.html" class="hover:underline">Skills</a>
+    </nav>
+  </header>
+
+  <main class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow">
+      <h2 class="text-xl font-bold mb-2">AWS Certified Cloud Practitioner</h2>
+      <p>Credential earned in 2024 showcasing foundational knowledge of AWS Cloud.</p>
+    </div>
+    <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow">
+      <h2 class="text-xl font-bold mb-2">DevOps on Udemy</h2>
+      <p>Hands-on course covering CI/CD, Jenkins, Docker, Kubernetes, and infrastructure automation.</p>
+    </div>
+    <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow">
+      <h2 class="text-xl font-bold mb-2">Linux Basics for Beginners</h2>
+      <p>Online training from Linux Foundation covering shell commands, file management, and scripting.</p>
+    </div>
+  </main>
+
+  <footer class="mt-10 p-6 bg-gray-800 text-white text-center">
+    <p>Connect with me:</p>
+    <p>Email: harish@example.com | GitHub: @harish-n | LinkedIn: https://www.linkedin.com/in/harish-n-shetty/</p>
+  </footer>
+</body>
+</html>

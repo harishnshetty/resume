@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Experience - Harish's Console</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(-45deg, #667eea, #cab6b6, #365fcd, #667eea);
+      background-size: 400% 400%;
+      animation: gradientShift 10s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #7f5af0, #e2cccc, #1e8a85);
+      background-size: 200% 200%;
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      animation: textGlow 6s ease infinite;
+      font-weight: bold;
+    }
+
+    @keyframes textGlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .glow-card {
+      transition: box-shadow 0.4s ease, transform 0.4s ease, background 0.4s ease;
+    }
+
+    .glow-card:hover {
+      background: linear-gradient(145deg, #dd89a64d, #8b77e240, #d879a140);
+      box-shadow: 0 0 25px 10px rgba(127, 90, 240, 0.3),
+                  0 0 40px 15px rgba(226, 204, 204, 0.2),
+                  0 0 60px 20px rgba(30, 138, 133, 0.2);
+      transform: translateY(-5px) scale(1.02);
+    }
+  </style>
+  <script>
+    function toggleDarkMode() {
+      document.documentElement.classList.toggle('dark');
+    }
+  </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+  <header class="bg-gray-800 text-white p-4 flex justify-between items-center">
+    <h1 class="text-xl gradient-text">Harish's Console</h1>
+    <nav class="flex gap-4 text-sm">
+      <a href="index.html" class="hover:underline">Home</a>
+      <a href="about.html" class="hover:underline">About</a>
+      <a href="projects.html" class="hover:underline">Projects</a>
+      <a href="skills.html" class="hover:underline">Skills</a>
+      <a href="certification.html" class="hover:underline">Certifications</a>
+      <a href="contact.html" class="hover:underline">Contact</a>
+      <button onclick="toggleDarkMode()" class="bg-gray-600 px-2 py-1 rounded">Toggle</button>
+    </nav>
+  </header>
+
+  <main class="p-6 max-w-4xl mx-auto">
+    <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow">
+      <h2 class="text-2xl font-bold mb-4">Professional Experience</h2>
+
+      <div class="mb-6">
+        <h3 class="text-xl font-semibold">DevOps Intern – CloudTech Solutions</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Jan 2025 – Apr 2025</p>
+        <ul class="list-disc list-inside mt-2">
+          <li>Set up CI/CD pipelines using GitHub Actions and Jenkins for automated deployments.</li>
+          <li>Managed Docker containers and deployed applications on AWS EC2 and ECS.</li>
+          <li>Created Infrastructure as Code (IaC) using Terraform to automate resource provisioning.</li>
+        </ul>
+      </div>
+
+      <div class="mb-6">
+        <h3 class="text-xl font-semibold">Freelance Web Developer</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400">2023 – Present</p>
+        <ul class="list-disc list-inside mt-2">
+          <li>Developed responsive websites using HTML, Tailwind CSS, and JavaScript.</li>
+          <li>Integrated APIs, deployed projects on Netlify and Vercel, and optimized for SEO.</li>
+          <li>Maintained GitHub repositories and showcased work via personal portfolio.</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-xl font-semibold">Tech Content Creator – YouTube</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400">2022 – Present</p>
+        <ul class="list-disc list-inside mt-2">
+          <li>Created tutorials on Linux, Docker, and AWS concepts with over 1K+ views per video.</li>
+          <li>Helped beginner developers understand complex DevOps topics visually.</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <footer class="mt-10 p-4 bg-gray-800 text-white text-center">
+    &copy; 2025 Harish N — All rights reserved.
+  </footer>
+</body>
+</html>

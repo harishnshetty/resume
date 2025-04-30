@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects - Harish's Console</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(-45deg, #667eea, #cab6b6, #365fcd, #667eea);
+      background-size: 400% 400%;
+      animation: gradientShift 10s ease infinite;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .glow-card {
+      transition: box-shadow 0.4s ease, transform 0.4s ease, background 0.4s ease;
+    }
+    .glow-card:hover {
+      background: linear-gradient(145deg, #dd89a64d, #8b77e240, #d879a140);
+      box-shadow: 0 0 25px 10px rgba(127, 90, 240, 0.3),
+                  0 0 40px 15px rgba(226, 204, 204, 0.2),
+                  0 0 60px 20px rgba(30, 138, 133, 0.2);
+      transform: translateY(-5px) scale(1.02);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+
+  <header class="bg-gray-800 text-white p-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold">Harish's Projects</h1>
+    <nav class="space-x-4">
+      <a href="index.html" class="hover:underline">Home</a>
+      <a href="skills.html" class="hover:underline">Skills</a>
+      <a href="certification.html" class="hover:underline">Certifications</a>
+      <a href="contact.html" class="hover:underline">Contact</a>
+    </nav>
+  </header>
+
+  <main class="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow">
+      <h2 class="text-xl font-bold mb-2">AWS Resume Portfolio</h2>
+      <p>Hosted on GitHub Pages with Tailwind CSS and responsive design.</p>
+      <a href="https://github.com/harish-n/aws-portfolio" target="_blank" class="text-blue-500 underline">View Project</a>
+    </div>
+
+    <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow">
+      <h2 class="text-xl font-bold mb-2">DevOps CI/CD Pipeline</h2>
+      <p>Jenkins pipeline setup using Docker and GitHub for automation.</p>
+      <a href="https://github.com/harish-n/devops-pipeline" target="_blank" class="text-blue-500 underline">View Project</a>
+    </div>
+
+    <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow">
+      <h2 class="text-xl font-bold mb-2">Kubernetes Demo App</h2>
+      <p>Microservices app deployed using Kubernetes and Helm charts.</p>
+      <a href="https://github.com/harish-n/k8s-demo" target="_blank" class="text-blue-500 underline">View Project</a>
+    </div>
+  </main>
+
+  <footer class="mt-10 p-6 bg-gray-800 text-white text-center">
+    <p>Email: harish@example.com | GitHub: @harish-n | LinkedIn: <a href="https://www.linkedin.com/in/harish-n-shetty/" class="underline">harish-n-shetty</a></p>
+  </footer>
+
+</body>
+</html>
