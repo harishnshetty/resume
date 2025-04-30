@@ -1,0 +1,243 @@
+* {
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline: 0;
+  text-decoration: none;
+  color: white;
+}
+
+body {
+  background-color: rgb(6, 7, 12);
+  font-family: inter;
+  background-image: url(background-img.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+  padding: 0 10%;
+}
+
+/* Header */
+#header, nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  z-index: 1;
+}
+
+.nav-item {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-left: 60px;
+  transition: color 0.12s, transform 0.12s;
+}
+
+nav .active {
+  color: #3FA2F6;
+}
+
+.nav-item:hover {
+  color: #3FA2F6;
+}
+
+.nav-item:active {
+  transform: scale(1.1);
+}
+
+/* logo */
+.logo {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+/* Hero-section */
+#hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+/* Left */
+.hero-left {
+  display: flex;
+  align-items: center;
+  padding-top: 150px;
+  z-index: 1;
+}
+
+h1{
+  font-size: 4rem;
+  font-weight: 800;
+  padding: 25px 0;
+}
+
+h3 {
+  font-size: 2.3rem;
+  font-weight: 800;
+  color: #3FA2F6;
+  padding-bottom: 40px;
+}
+
+p {
+  font-size: 1.2rem;
+  color: lightgray;
+  line-height: 1.5;
+  padding-bottom: 50px;
+}
+
+/* button */
+.cta button {
+  color: black;
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 15px 0;
+  width: 200px;
+  border:none;
+  border-radius: 8px;
+  margin-right: 50px;
+  background-color: #3FA2F6;
+  margin-bottom: 180px;
+  transition: background-color 0.12s, border 0.12s, color 0.21s, padding 0.12s;
+}
+
+.cta .cta-1:hover {
+  background-color: transparent;
+  color: #3FA2F6;
+  border: 2px solid #3FA2F6;
+  padding: 13px 0;
+}
+
+.cta .cta-2:hover {
+  background-color: #3fa1f6;
+  color: #000000;
+}
+
+.cta .cta-2 {
+  background-color: transparent;
+  color: #3FA2F6;
+  border: 2px solid #3FA2F6;
+  padding: 13px 0;
+}
+
+/* Icons */
+.social-icon {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.social-icon{
+  padding-bottom: 50px;
+}
+
+.social-icon i {
+font-size: 1.2rem;
+color: #3FA2F6;
+border: 1px solid #3FA2F6;
+border-radius: 50px;
+padding: 8px;
+height: 25px;
+width: 25px;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: transform 0.12s, box-shadow 0.12s;
+cursor: pointer;
+
+}
+
+.social-icon i:hover {
+  transform: scale(1.1);
+  text-shadow: 0 0 10px #3FA2F6;
+}
+
+/* Right section */
+
+.hero-right {
+  transition: background-color 3s, box-shadow 3s;
+  cursor: pointer;
+}
+.hero-right:hover {
+  background-color: rgba(6, 7, 12, 0.705);
+  box-shadow: 
+    0 0 20px rgb(6, 7, 12),
+    0 0 50px rgb(6, 7, 12),
+    0 0 100px rgb(6, 7, 12),
+    0 0 200px rgb(6, 7, 12);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from{
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to{
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInTop {
+  from{
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to{
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes backgroundZoom {
+  from{
+    background-size: 80%;
+  }
+  to{
+    background-size: 100%;
+  }
+}
+
+
+
+
+/* Apply Animations */
+h1 {
+  animation: fadeIn 1.2s ease-out forwards;
+  opacity: 0;
+  animation-delay: 0.2s;
+}
+
+h3 {
+  animation: fadeIn 1.4s ease-out forwards;
+  opacity: 0;
+  animation-delay: 0.4s;
+}
+
+p {
+  animation: fadeIn 1.6s ease-out forwards;
+  opacity: 0;
+  animation-delay: 0.6s;
+}
+button {
+  animation: fadeIn 1.8s ease-out forwards;
+  opacity: 0;
+  animation-delay: 0.8s;
+}
+
+.social-icon {
+  animation: fadeIn 2s ease-out forwards;
+  opacity: 0;
+  animation-delay: 1s;
+}
+
+.nav-item,
+.left-section {
+  animation: fadeInTop 1s ease-in forwards;
+  opacity: 0;
+}
+
+body {
+  animation: backgroundZoom 3s ease-in forwards;
+}

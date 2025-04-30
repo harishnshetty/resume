@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Harish N - Portfolio</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .hero {
+      background: linear-gradient(-45deg, #667eea, #764ba2, #667eea, #764ba2);
+      background-size: 400% 400%;
+      animation: gradientShift 10s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .typed-text {
+      font-size: 0.875rem;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid white;
+      animation: typing 4s steps(30, end) infinite, blink 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+      0% { width: 0 }
+      50% { width: 100% }
+      100% { width: 0 }
+    }
+
+    @keyframes blink {
+      from, to { border-color: transparent }
+      50% { border-color: white }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans">
+  <header class="hero text-white py-6 px-6 shadow flex items-center">
+    <img src="img.png" alt="Harish N Logo" class="h-24 w-24 rounded-2xl object-cover mr-6">
+    <div>
+      <h1 class="text-2xl font-bold leading-tight">Harish N</h1>
+      <p class="typed-text" id="typed-text"></p>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto p-6">
+    <section class="mb-12">
+      <h2 class="text-3xl font-semibold mb-4 border-b pb-2">About Me</h2>
+      <p class="text-lg leading-relaxed">I’m a Computer Science student deeply passionate about cloud computing, DevOps, and automation using AWS, Docker, and Kubernetes. I enjoy building real-world projects and constantly improving my technical skills.</p>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="text-3xl font-semibold mb-4 border-b pb-2">Certificates</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-lg shadow-md p-4">
+          <img src="certificates/aws-architect.png" alt="AWS Certificate" class="rounded mb-2">
+          <p class="text-center font-medium">Architecting on AWS</p>
+        </div>
+        <div class="bg-white rounded-lg shadow-md p-4">
+          <img src="certificates/docker.png" alt="Docker Certificate" class="rounded mb-2">
+          <p class="text-center font-medium">Docker Essentials</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="text-3xl font-semibold mb-4 border-b pb-2">Contact</h2>
+      <ul class="space-y-2 text-lg">
+        <li>Email: <a href="mailto:harish@example.com" class="text-blue-600">harish@example.com</a></li>
+        <li>GitHub: <a href="https://github.com/harishN" class="text-blue-600">github.com/harishN</a></li>
+        <li>LinkedIn: <a href="https://linkedin.com/in/harishN" class="text-blue-600">linkedin.com/in/harishN</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="bg-white text-center p-4 text-sm text-gray-600 shadow-inner">
+    &copy; 2025 Harish N. All rights reserved.
+  </footer>
+
+  <script>
+    const roles = ["Cloud & DevOps Enthusiast", "AI Cloud & DevOps"];
+    let index = 0;
+    const typedText = document.getElementById("typed-text");
+
+    function typeRole() {
+      typedText.textContent = "";
+      typedText.classList.remove("typed-text");
+      void typedText.offsetWidth;
+      typedText.classList.add("typed-text");
+      typedText.textContent = roles[index];
+      index = (index + 1) % roles.length;
+    }
+
+    setInterval(typeRole, 4000);
+    typeRole();
+  </script>
+</body>
+</html>
