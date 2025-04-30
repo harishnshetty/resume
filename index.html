@@ -7,7 +7,7 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     body {
-      background: linear-gradient(-45deg, #667eea, #ffffff, #1e3a8a, #667eea);
+      background: linear-gradient(-45deg, #667eea, #cab6b6, #365fcd, #667eea);
       background-size: 400% 400%;
       animation: gradientShift 10s ease infinite;
     }
@@ -43,19 +43,24 @@
   <header class="bg-gray-800 text-white p-4 flex justify-between items-center">
     <h1 class="text-xl font-bold">Harish's Console</h1>
     <nav class="flex flex-col sm:flex-row sm:gap-4 gap-2 mt-2 sm:mt-0 w-full sm:w-auto items-center justify-center">
-        <div class="flex flex-wrap gap-2 justify-center w-full sm:w-auto">
-          <a href="#about" class="hover:underline text-center px-2">About</a>
-          <a href="#projects" class="hover:underline text-center px-2">Projects</a>
-          <a href="#skills" class="hover:underline text-center px-2">Skills</a>
-          <a href="#contact" class="hover:underline text-center px-2">Contact</a>
+  
+        <!-- Navigation Links: Stay in one row, scrollable on very small screens -->
+        <div class="w-full sm:w-auto overflow-x-auto">
+          <div class="inline-flex gap-4 px-2 whitespace-nowrap min-w-fit">
+            <a href="#about" class="hover:underline text-center">About</a>
+            <a href="#projects" class="hover:underline text-center">Projects</a>
+            <a href="#skills" class="hover:underline text-center">Skills</a>
+            <a href="#contact" class="hover:underline text-center">Contact</a>
+          </div>
         </div>
       
-        <!-- Controls: Toggle Mode + Resume Button -->
+        <!-- Controls: Toggle + Resume Button -->
         <div class="grid grid-cols-2 gap-2 w-full sm:w-auto mt-2 sm:mt-0 text-sm sm:text-base">
           <button onclick="toggleDarkMode()" class="bg-gray-600 px-2 py-2 rounded text-center truncate">Toggle Mode</button>
           <a href="./resume.pdf" download class="glow-button text-center truncate">Download Resume</a>
         </div>
       </nav>
+      
       
   </header>
 
