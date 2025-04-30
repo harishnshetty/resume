@@ -103,11 +103,73 @@
 
         
     </header>
+    <section class="flex justify-center items-center py-10 px-4">
+        <div class="flex flex-row items-center w-full max-w-4xl gap-4 flex-nowrap overflow-x-auto">
+          <!-- Image -->
+          <img src="image.png" alt="Chat Assistant"
+            class="rounded-full w-24 sm:w-32 md:w-40 flex-shrink-0 shadow-xl" />
+      
+          <!-- Text and Input -->
+          <div class="flex-grow text-left min-w-[200px]">
+            <h2 class="text-2xl md:text-4xl font-bold mb-2">Welcome to Harish's Portfolio</h2>
+            <p class="text-base md:text-lg mb-4">Cloud Enthusiast • DevOps Learner • Full Stack Developer</p>
+            <div
+              class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full px-4 py-2 shadow-md flex items-center gap-2 w-full max-w-xs md:max-w-md">
+              <input
+                id="autoInput"
+                type="text"
+                placeholder="Skills"
+                class="bg-transparent outline-none w-full text-sm md:text-base dark:text-white"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      
+<script>
+  const words = ["Jenkins", "Docker", "Kubernetes", "CI/CD"];
+  const input = document.getElementById("autoInput");
+  let wordIndex = 0;
+  let charIndex = 0;
+  let typingForward = true;
 
-    <section class="text-center py-10">
-        <h2 class="text-4xl font-bold mb-2">Welcome to Harish's Portfolio</h2>
+  function type() {
+    if (typingForward) {
+      if (charIndex < words[wordIndex].length) {
+        input.value += words[wordIndex][charIndex++];
+        setTimeout(type, 150);
+      } else {
+        typingForward = false;
+        setTimeout(type, 1000);
+      }
+    } else {
+      if (charIndex > 0) {
+        input.value = input.value.slice(0, --charIndex);
+        setTimeout(type, 100);
+      } else {
+        typingForward = true;
+        wordIndex = (wordIndex + 1) % words.length;
+        setTimeout(type, 300);
+      }
+    }
+  }
+
+  type();
+</script>
+
+        </div>
+      </section>
+      
+    
+    
+      
+    
+    
+    
+        <!-- 
         <p class="text-lg">Cloud Enthusiast • DevOps Learner • Full Stack Developer</p>
-    </section>
+    </section> -->
 
     <section id="services" class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow">
