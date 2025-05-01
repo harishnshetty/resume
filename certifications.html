@@ -32,13 +32,36 @@
   </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
-  <header class="bg-gray-800 text-white p-4 flex justify-between items-center">
-    <h1 class="text-xl font-bold">Certifications</h1>
-    <nav class="space-x-4">
-      <a href="index.html" class="hover:underline">Home</a>
-      <a href="skills.html" class="hover:underline">Skills</a>
-    </nav>
-  </header>
+ <!-- Header -->
+ <header class="bg-gray-800 text-white p-2 flex justify-between items-center">
+  <h1 class="text-3xl gradient-text">Education</h1>
+  <nav class="relative w-full sm:w-auto text-gray-900 dark:text-gray-100">
+    <div class="sm:hidden flex justify-end">
+      <button onclick="toggleMobileMenu()" class="text-white text-2xl">☰</button>
+    </div>
+    <div id="mobileMenu"
+      class="hidden sm:flex sm:flex-row sm:gap-4 gap-2 items-center absolute sm:static top-16 left-1/2 transform -translate-x-1/2 sm:translate-x-0 w-11/12 sm:w-auto z-50 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl flex-col sm:flex-row">
+      <div class="w-full flex justify-end sm:hidden mb-2">
+        <button onclick="toggleMobileMenu()" class="text-gray-600 dark:text-gray-300 text-xl font-bold">×</button>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto text-center">
+        <a href="index.html">Home</a>
+        <a href="certification.html">Certifications</a>
+        <a href="projects.html">Projects</a>
+        <a href="skills.html">Skills</a>
+        <a href="education.html">Education</a>
+        <a href="experience.html">Experience</a>
+        <a href="about.html">About</a>
+
+        
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full sm:w-auto mt-4 sm:mt-0 text-sm sm:text-base">
+        <a href="contact.html" class="bg-gray-600 px-2 py-2 rounded text-center truncate">Contact</a>
+        <a href="./resume.pdf" download class="glow-button text-center truncate">⬇️ Resume</a>
+      </div>
+    </div>
+  </nav>
+</header>
 
   <main class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow">

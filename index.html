@@ -1,21 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Harish's Console</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
   <style>
+    html, body {
+      height: 100%; /* Ensures body takes up the full viewport height */
+      margin: 0;
+      overflow-x: hidden; /* Prevent horizontal scrollbar */
+    }
+
     body {
+      display: flex;
+      flex-direction: column; /* Stack the content and footer vertically */
       background: linear-gradient(-45deg, #667eea, #cab6b6, #365fcd, #667eea);
       background-size: 400% 400%;
       animation: gradientShift 10s ease infinite;
+      flex-grow: 1; /* Ensures the body grows to fill available space */
     }
+
+    footer {
+      margin-top: auto; /* Ensures footer is at the bottom */
+      padding: 1rem; /* Adjust padding to prevent overflow */
+    }
+    
+    footer .flex {
+      flex-wrap: wrap; /* Allows items to wrap in case of space constraints */
+      justify-content: center; /* Centers the footer items */
+      gap: 1rem; /* Adds space between items */
+    }
+    
+    footer img {
+      width: 2.5rem; /* Set width to 10rem (w-10) */
+      height: 2.5rem; /* Set height to 10rem (h-10) */
+    }
+    
+    footer span {
+      font-size: 1rem; /* Adjust the font size to match the icon size */
+    }
+    
+
     @keyframes gradientShift {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+
     .gradient-text {
       background: linear-gradient(90deg, #7f5af0, #e2cccc, #1e8a85);
       background-size: 200% 200%;
@@ -26,11 +60,13 @@
       animation: textGlow 6s ease infinite;
       font-weight: bold;
     }
+
     @keyframes textGlow {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+
     .glow-button {
       background: linear-gradient(90deg, #7f5af0, #e2cccc, #1e8a85);
       background-size: 200% 200%;
@@ -42,61 +78,61 @@
       box-shadow: 0 0 10px rgba(127, 90, 240, 0.8);
       transition: transform 0.2s, box-shadow 0.2s;
     }
+
     @keyframes glowGradient {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+
     .glow-button:hover {
       transform: scale(1.05);
       box-shadow: 0 0 15px rgba(127, 90, 240, 1);
     }
+
     .glow-card {
       transition: box-shadow 0.4s ease, transform 0.4s ease, background 0.4s ease;
     }
+
     .glow-card:hover {
-      background: linear-gradient(145deg, #dd89a64d, #8b77e240, #d879a140);
-      box-shadow: 0 0 25px 10px rgba(127, 90, 240, 0.3),
-                  0 0 40px 15px rgba(226, 204, 204, 0.2),
-                  0 0 60px 20px rgba(30, 138, 133, 0.2);
+      box-shadow:  0 0 25px 10px rgba(127, 90, 240, 0.3),
+                   0 0 40px 15px rgba(226, 204, 204, 0.2),
+                   0 0 60px 20px rgba(30, 138, 133, 0.2); 
       transform: translateY(-5px) scale(1.02);
     }
-    /* Add this to your style block */
-nav a {
-  color: #1a202c; /* Tailwind gray-900 */
-}
-.dark nav a {
-  color: #f9fafb; /* Tailwind gray-100 */
-}
 
-nav a:hover {
-  text-decoration: underline;
-  color: #3b82f6; /* Tailwind blue-500 */
-}
+    nav a {
+      color: #1a202c;
+    }
 
-/* Menu Links (Dialog Box Style on Mobile) */
-#mobileMenu {
-  background-color: #ffffff;
-}
-.dark #mobileMenu {
-  background-color: #1f2937; /* Tailwind gray-800 */
-}
+    .dark nav a {
+      color: #f9fafb;
+    }
 
-/* Remove white background in desktop mode */
-@media (min-width: 640px) {
-  #mobileMenu {
-    background-color: transparent; /* No background in desktop */
-  }
+    nav a:hover {
+      text-decoration: underline;
+      color: #3b82f6;
+    }
 
-  /* Change text color to white for desktop */
-  #mobileMenu a {
-    color: #ffffff; /* Tailwind white text */
-  }
-}
+    #mobileMenu {
+      background-color: #ffffff;
+    }
 
+    .dark #mobileMenu {
+      background-color: #1f2937;
+    }
 
+    @media (min-width: 640px) {
+      #mobileMenu {
+        background-color: transparent;
+      }
 
+      #mobileMenu a {
+        color: #ffffff;
+      }
+    }
   </style>
+
   <script>
     function toggleDarkMode() {
       document.documentElement.classList.toggle('dark');
@@ -110,6 +146,7 @@ nav a:hover {
     }
   </script>
 </head>
+
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen relative">
 
   <!-- Overlay -->
@@ -117,51 +154,41 @@ nav a:hover {
 
   <header class="bg-gray-800 text-white p-2 flex justify-between items-center">
     <h1 class="text-3xl gradient-text">Harish.N</h1>
-  
-    <!-- Navigation -->
+
     <nav class="relative w-full sm:w-auto text-gray-900 dark:text-gray-100">
-  
-      <!-- Hamburger (mobile only) -->
       <div class="sm:hidden flex justify-end">
-        <button onclick="toggleMobileMenu()" class="text-white focus:outline-none text-2xl">
-          ☰
-        </button>
+        <button onclick="toggleMobileMenu()" class="text-white focus:outline-none text-2xl">☰</button>
       </div>
-  
-      <!-- Menu Links (Dialog Box Style on Mobile) -->
+
+      <!-- FIXED: Menu behavior on desktop -->
       <div id="mobileMenu"
-        class="hidden sm:flex sm:flex-row sm:gap-4 gap-2 items-center absolute sm:static top-16 left-1/2 transform -translate-x-1/2 sm:translate-x-0 w-11/12 sm:w-auto z-50 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl flex-col sm:flex-row">
-  
-        <!-- Close button -->
+        class="hidden sm:flex sm:flex-row sm:gap-4 gap-2 items-center sm:static absolute top-16 left-1/2 sm:left-auto transform sm:transform-none -translate-x-1/2 sm:translate-x-0 w-11/12 sm:w-auto z-50 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl flex-col sm:flex-row">
+
         <div class="w-full flex justify-end sm:hidden mb-2">
           <button onclick="toggleMobileMenu()" class="text-gray-600 dark:text-gray-300 text-xl font-bold">×</button>
         </div>
-  
-        <!-- Links -->
+
         <div class="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto text-center">
-          <a href="about.html" class="hover:underline">About</a>
-          <a href="education.html" class="hover:underline">Education</a>
-          <a href="experience.html" class="hover:underline">Experience</a>
+          <a href="certifications.html" class="hover:underline">Certifications</a>
           <a href="projects.html" class="hover:underline">Projects</a>
           <a href="skills.html" class="hover:underline">Skills</a>
-          <a href="certification.html" class="hover:underline">Certifications</a>
+          <a href="education.html" class="hover:underline">Education</a>
+          <a href="experience.html" class="hover:underline">Experience</a>
+          <a href="about.html" class="hover:underline">About</a>
         </div>
-  
-        <!-- Actions -->
-        <div class="grid grid-cols-2 gap-2 w-full sm:w-auto mt-4 sm:mt-0 text-sm sm:text-base">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full sm:w-auto mt-4 sm:mt-0 text-sm sm:text-base">
           <a href="contact.html" class="bg-gray-600 px-2 py-2 rounded text-center truncate">Contact</a>
           <a href="./resume.pdf" download class="glow-button text-center truncate">⬇️ Resume</a>
         </div>
       </div>
     </nav>
   </header>
-  
 
-  <!-- Hero -->
+  <!-- Hero Section -->
   <section class="flex justify-center items-center py-10 px-4">
-    <div class="flex flex-row items-center w-full max-w-4xl gap-4 flex-nowrap overflow-x-auto">
-      <img src="image.png" alt="Chat Assistant"
-        class="rounded-full w-24 sm:w-32 md:w-40 flex-shrink-0 shadow-xl" />
+    <div class="flex flex-col sm:flex-row items-center w-full max-w-4xl gap-4 overflow-x-hidden">
+      <img src="image.png" alt="Chat Assistant" class="rounded-full w-24 sm:w-32 md:w-40 max-w-full flex-shrink-0 shadow-xl" />
       <div class="flex-grow text-left min-w-[200px]">
         <h2 class="text-2xl md:text-4xl font-bold mb-2">Welcome to Harish's Portfolio</h2>
         <p class="text-base md:text-lg mb-4">Cloud Enthusiast • DevOps Learner • AWS</p>
@@ -173,39 +200,8 @@ nav a:hover {
     </div>
   </section>
 
-  <!-- Typing Animation Script -->
-  <script>
-    const words = ["Jenkins", "Docker", "Kubernetes", "CI/CD", "AWS", "Terraform", "Ansible", "Git", "Bash", "Linux"];
-    const input = document.getElementById("autoInput");
-    let wordIndex = 0;
-    let charIndex = 0;
-    let typingForward = true;
-
-    function type() {
-      if (typingForward) {
-        if (charIndex < words[wordIndex].length) {
-          input.value += words[wordIndex][charIndex++];
-          setTimeout(type, 150);
-        } else {
-          typingForward = false;
-          setTimeout(type, 1000);
-        }
-      } else {
-        if (charIndex > 0) {
-          input.value = input.value.slice(0, --charIndex);
-          setTimeout(type, 100);
-        } else {
-          typingForward = true;
-          wordIndex = (wordIndex + 1) % words.length;
-          setTimeout(type, 300);
-        }
-      }
-    }
-    type();
-  </script>
-
-  <!-- Services -->
-  <section id="services" class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <!-- Services Section -->
+  <section id="services" class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
     <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow">
       <a href="projects.html" class="block">
         <h3 class="text-xl font-bold mb-2">Projects</h3>
@@ -215,22 +211,30 @@ nav a:hover {
     <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow">
       <a href="skills.html" class="block">
         <h3 class="text-xl font-bold mb-2">Skills</h3>
-        <p>Languages, frameworks, and tools I use, including HTML, CSS, JS, React, Docker, and more.</p>
+        <p>AWS, Jenkins, Docker, GitHub, Ansible, Linux, Bash Scripting, and more.</p>
       </a>
     </div>
     <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow">
       <a href="certifications.html" class="block">
         <h3 class="text-xl font-bold mb-2">Certifications</h3>
-        <p>Online courses and certifications I've completed related to AWS, DevOps, and development.</p>
+        <p>Courses and certifications completed in AWS, DevOps, and related technologies.</p>
       </a>
     </div>
-</section>
+  </section>
 
-
-  <!-- Footer -->
-  <footer id="contact" class="mt-10 p-6 bg-gray-800 text-white text-center">
-    <p>Connect with me:</p>
-    <p>Email: harish@example.com | GitHub: @harish-n | LinkedIn: https://www.linkedin.com/in/harish-n-shetty/</p>
+  <footer id="contact" class="bg-gray-800 text-white text-center py-4 px-2">
+    <div class="flex flex-wrap justify-center items-center gap-4 text-sm">
+      <a href="mailto:harishn662@example.com" class="hover:opacity-75" aria-label="Email">
+        <img src="img/gmail.svg" alt="Email" class="w-10 h-10" />
+      </a>
+      <span>harishn662@example.com</span>
+      <a href="https://github.com/harishnshetty" target="_blank" class="hover:opacity-75" aria-label="GitHub">
+        <img src="img/github.svg" alt="GitHub" class="w-10 h-10" />
+      </a>
+      <a href="https://www.linkedin.com/in/harish-n-shetty/" target="_blank" class="hover:opacity-75" aria-label="LinkedIn">
+        <img src="img/linkedin.svg" alt="LinkedIn" class="w-10 h-10" />
+      </a>
+    </div>
   </footer>
 </body>
 </html>
