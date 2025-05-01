@@ -105,9 +105,25 @@
 
     @media (min-width: 768px) {
       footer {
-        margin-top: auto;
+        margin-top: auto; /* Ensures footer is at the bottom */
+        padding: 1rem; /* Adjust padding to prevent overflow */
       }
-    }
+      
+      footer .flex {
+        flex-wrap: wrap; /* Allows items to wrap in case of space constraints */
+        justify-content: center; /* Centers the footer items */
+        gap: 1rem; /* Adds space between items */
+      }
+      
+      footer img {
+        width: 2.5rem; /* Set width to 10rem (w-10) */
+        height: 2.5rem; /* Set height to 10rem (h-10) */
+      }
+      
+      footer span {
+        font-size: 1rem; /* Adjust the font size to match the icon size */
+      }
+      
   </style>
   <script>
     function toggleDarkMode() {
@@ -199,20 +215,20 @@
       </div>
     </main>
 
-    <footer id="contact" class="p-4 bg-gray-800 text-white text-center">
-      <div class="flex justify-center items-center gap-4 flex-wrap text-sm">
-        <a href="mailto:harishn662@example.com" aria-label="Email">
-          <img src="img/gmail.svg" alt="Email Icon" class="w-6 h-6" />
-        </a>
-        <span>harishn662@example.com</span>
-        <a href="https://github.com/harishnshetty" target="_blank" aria-label="GitHub">
-          <img src="img/github.svg" alt="GitHub Icon" class="w-6 h-6" />
-        </a>
-        <a href="https://www.linkedin.com/in/harish-n-shetty/" target="_blank" aria-label="LinkedIn">
-          <img src="img/linkedin.svg" alt="LinkedIn Icon" class="w-6 h-6" />
-        </a>
-      </div>
-    </footer>
+    <footer id="contact" class="bg-white text-black text-center py-4 px-2">
+      <div class="flex flex-wrap justify-center items-center gap-4 text-sm">
+    <a href="mailto:harishn662@example.com" class="hover:opacity-75" aria-label="Email">
+      <img src="img/gmail.svg" alt="Email" class="w-10 h-10" />
+    </a>
+    <span>harishn662@example.com</span>
+    <a href="https://github.com/harishnshetty" target="_blank" class="hover:opacity-75" aria-label="GitHub">
+      <img src="img/github.svg" alt="GitHub" class="w-10 h-10" />
+    </a>
+    <a href="https://www.linkedin.com/in/harish-n-shetty/" target="_blank" class="hover:opacity-75" aria-label="LinkedIn">
+      <img src="img/linkedin.svg" alt="LinkedIn" class="w-10 h-10" />
+    </a>
+  </div>
+</footer>
     
   </div>
 </body>
