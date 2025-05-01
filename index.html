@@ -1,197 +1,236 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Harish's Console</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        body {
-        background: linear-gradient(-45deg, #667eea, #cab6b6, #365fcd, #667eea);
-        background-size: 400% 400%;
-        animation: gradientShift 10s ease infinite;
-        }
-
-        @keyframes gradientShift {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-        }
-        .gradient-text {
-            background: linear-gradient(90deg, #7f5af0, #e2cccc, #1e8a85);
-            background-size: 200% 200%;
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            -webkit-text-fill-color: transparent;
-            animation: textGlow 6s ease infinite;
-            font-weight: bold;
-        }
-        
-        @keyframes textGlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-
-        .glow-button {
-            background: linear-gradient(90deg, #7f5af0, #e2cccc, #1e8a85);
-            background-size: 200% 200%;
-            animation: glowGradient 6s ease infinite;
-            color: black;
-            font-weight: bold;
-            padding: 0.5rem 1rem;
-            border-radius: 0.375rem;
-            box-shadow: 0 0 10px rgba(127, 90, 240, 0.8);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        
-        @keyframes glowGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-
-        .glow-button:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 15px rgba(127, 90, 240, 1);
-        }
-        .glow-card {
-            transition: box-shadow 0.4s ease, transform 0.4s ease, background 0.4s ease;
-          }
-          
-          .glow-card:hover {
-            background: linear-gradient(145deg, #dd89a64d, #8b77e240, #d879a140);
-            box-shadow: 0 0 25px 10px rgba(127, 90, 240, 0.3),
-                        0 0 40px 15px rgba(226, 204, 204, 0.2),
-                        0 0 60px 20px rgba(30, 138, 133, 0.2);
-            transform: translateY(-5px) scale(1.02);
-          }
-          
-          
-    </style>
-    <script>
-        function toggleDarkMode() {
-        document.documentElement.classList.toggle('dark');
-        }
-    </script>
-    </head>
-    <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
-    <header class="bg-gray-800 text-white p-4 flex justify-between items-center">
-        <h1 class="text-xl gradient-text">Harish's Console</h1>
-
-        <nav class="flex flex-col sm:flex-row sm:gap-4 gap-2 mt-2 sm:mt-0 w-full sm:w-auto items-center justify-center">
-    
-    <!-- Navigation Links: Stay in one row, scrollable on very small screens -->
-    <div class="w-full sm:w-auto overflow-x-auto">
-        <div class="inline-flex gap-4 px-2 whitespace-nowrap min-w-fit">
-        <a href="about.html" class="hover:underline text-center">About</a>
-        <a href="education.html" class="hover:underline text-center">Education</a>
-        <a href="experience.html" class="hover:underline text-center">Experience</a>
-        <a href="projects.html" class="hover:underline text-center">Projects</a>
-        <a href="skills.html" class="hover:underline text-center">Skills</a>
-        <a href="certification.html" class="hover:underline text-center">Certifications</a>
-        </div>
-    </div>
-
-    <!-- Controls: Toggle + Resume Button -->
-    <div class="grid grid-cols-2 gap-2 w-full sm:w-auto mt-2 sm:mt-0 text-sm sm:text-base">
-        <a href="contact.html" class="bg-gray-600 px-2 py-2 rounded text-center truncate">Contact</a> 
-        <a href="./resume.pdf" download class="glow-button text-center truncate">⬇️ Resume</a>
-    </div>
-    
-    </nav>
-
-        
-    </header>
-    <section class="flex justify-center items-center py-10 px-4">
-        <div class="flex flex-row items-center w-full max-w-4xl gap-4 flex-nowrap overflow-x-auto">
-          <!-- Image -->
-          <img src="image.png" alt="Chat Assistant"
-            class="rounded-full w-24 sm:w-32 md:w-40 flex-shrink-0 shadow-xl" />
-      
-          <!-- Text and Input -->
-          <div class="flex-grow text-left min-w-[200px]">
-            <h2 class="text-2xl md:text-4xl font-bold mb-2">Welcome to Harish's Portfolio</h2>
-            <p class="text-base md:text-lg mb-4">Cloud Enthusiast • DevOps Learner • AWS</p>
-            <div
-              class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full px-4 py-2 shadow-md flex items-center gap-2 w-full max-w-xs md:max-w-md">
-              <input
-                id="autoInput"
-                type="text"
-                placeholder="Skills"
-                class="bg-transparent outline-none w-full text-sm md:text-base dark:text-white"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      
-<script>
-  const words = ["Jenkins", "Docker", "Kubernetes", "CI/CD", "AWS", "Terraform", "Ansible", "Git", "Bash", "Linux"];
-  const input = document.getElementById("autoInput");
-  let wordIndex = 0;
-  let charIndex = 0;
-  let typingForward = true;
-
-  function type() {
-    if (typingForward) {
-      if (charIndex < words[wordIndex].length) {
-        input.value += words[wordIndex][charIndex++];
-        setTimeout(type, 150);
-      } else {
-        typingForward = false;
-        setTimeout(type, 1000);
-      }
-    } else {
-      if (charIndex > 0) {
-        input.value = input.value.slice(0, --charIndex);
-        setTimeout(type, 100);
-      } else {
-        typingForward = true;
-        wordIndex = (wordIndex + 1) % words.length;
-        setTimeout(type, 300);
-      }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Harish's Console</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(-45deg, #667eea, #cab6b6, #365fcd, #667eea);
+      background-size: 400% 400%;
+      animation: gradientShift 10s ease infinite;
     }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .gradient-text {
+      background: linear-gradient(90deg, #7f5af0, #e2cccc, #1e8a85);
+      background-size: 200% 200%;
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      animation: textGlow 6s ease infinite;
+      font-weight: bold;
+    }
+    @keyframes textGlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .glow-button {
+      background: linear-gradient(90deg, #7f5af0, #e2cccc, #1e8a85);
+      background-size: 200% 200%;
+      animation: glowGradient 6s ease infinite;
+      color: black;
+      font-weight: bold;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      box-shadow: 0 0 10px rgba(127, 90, 240, 0.8);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    @keyframes glowGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .glow-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(127, 90, 240, 1);
+    }
+    .glow-card {
+      transition: box-shadow 0.4s ease, transform 0.4s ease, background 0.4s ease;
+    }
+    .glow-card:hover {
+      background: linear-gradient(145deg, #dd89a64d, #8b77e240, #d879a140);
+      box-shadow: 0 0 25px 10px rgba(127, 90, 240, 0.3),
+                  0 0 40px 15px rgba(226, 204, 204, 0.2),
+                  0 0 60px 20px rgba(30, 138, 133, 0.2);
+      transform: translateY(-5px) scale(1.02);
+    }
+    /* Add this to your style block */
+nav a {
+  color: #1a202c; /* Tailwind gray-900 */
+}
+.dark nav a {
+  color: #f9fafb; /* Tailwind gray-100 */
+}
+
+nav a:hover {
+  text-decoration: underline;
+  color: #3b82f6; /* Tailwind blue-500 */
+}
+
+/* Menu Links (Dialog Box Style on Mobile) */
+#mobileMenu {
+  background-color: #ffffff;
+}
+.dark #mobileMenu {
+  background-color: #1f2937; /* Tailwind gray-800 */
+}
+
+/* Remove white background in desktop mode */
+@media (min-width: 640px) {
+  #mobileMenu {
+    background-color: transparent; /* No background in desktop */
   }
 
-  type();
-</script>
+  /* Change text color to white for desktop */
+  #mobileMenu a {
+    color: #ffffff; /* Tailwind white text */
+  }
+}
 
+
+
+  </style>
+  <script>
+    function toggleDarkMode() {
+      document.documentElement.classList.toggle('dark');
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const overlay = document.getElementById('menuOverlay');
+      menu.classList.toggle('hidden');
+      overlay.classList.toggle('hidden');
+    }
+  </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen relative">
+
+  <!-- Overlay -->
+  <div id="menuOverlay" onclick="toggleMobileMenu()" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+
+  <header class="bg-gray-800 text-white p-2 flex justify-between items-center">
+    <h1 class="text-3xl gradient-text">Harish.N</h1>
+  
+    <!-- Navigation -->
+    <nav class="relative w-full sm:w-auto text-gray-900 dark:text-gray-100">
+  
+      <!-- Hamburger (mobile only) -->
+      <div class="sm:hidden flex justify-end">
+        <button onclick="toggleMobileMenu()" class="text-white focus:outline-none text-2xl">
+          ☰
+        </button>
+      </div>
+  
+      <!-- Menu Links (Dialog Box Style on Mobile) -->
+      <div id="mobileMenu"
+        class="hidden sm:flex sm:flex-row sm:gap-4 gap-2 items-center absolute sm:static top-16 left-1/2 transform -translate-x-1/2 sm:translate-x-0 w-11/12 sm:w-auto z-50 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl flex-col sm:flex-row">
+  
+        <!-- Close button -->
+        <div class="w-full flex justify-end sm:hidden mb-2">
+          <button onclick="toggleMobileMenu()" class="text-gray-600 dark:text-gray-300 text-xl font-bold">×</button>
         </div>
-      </section>
-      
-    
-    
-      
-    
-    
-    
-        <!-- 
-        <p class="text-lg">Cloud Enthusiast • DevOps Learner • Full Stack Developer</p>
-    </section> -->
+  
+        <!-- Links -->
+        <div class="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto text-center">
+          <a href="about.html" class="hover:underline">About</a>
+          <a href="education.html" class="hover:underline">Education</a>
+          <a href="experience.html" class="hover:underline">Experience</a>
+          <a href="projects.html" class="hover:underline">Projects</a>
+          <a href="skills.html" class="hover:underline">Skills</a>
+          <a href="certification.html" class="hover:underline">Certifications</a>
+        </div>
+  
+        <!-- Actions -->
+        <div class="grid grid-cols-2 gap-2 w-full sm:w-auto mt-4 sm:mt-0 text-sm sm:text-base">
+          <a href="contact.html" class="bg-gray-600 px-2 py-2 rounded text-center truncate">Contact</a>
+          <a href="./resume.pdf" download class="glow-button text-center truncate">⬇️ Resume</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+  
 
-    <section id="services" class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow">
+  <!-- Hero -->
+  <section class="flex justify-center items-center py-10 px-4">
+    <div class="flex flex-row items-center w-full max-w-4xl gap-4 flex-nowrap overflow-x-auto">
+      <img src="image.png" alt="Chat Assistant"
+        class="rounded-full w-24 sm:w-32 md:w-40 flex-shrink-0 shadow-xl" />
+      <div class="flex-grow text-left min-w-[200px]">
+        <h2 class="text-2xl md:text-4xl font-bold mb-2">Welcome to Harish's Portfolio</h2>
+        <p class="text-base md:text-lg mb-4">Cloud Enthusiast • DevOps Learner • AWS</p>
+        <div class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full px-4 py-2 shadow-md flex items-center gap-2 w-full max-w-xs md:max-w-md">
+          <input id="autoInput" type="text" placeholder="Skills"
+            class="bg-transparent outline-none w-full text-sm md:text-base dark:text-white" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Typing Animation Script -->
+  <script>
+    const words = ["Jenkins", "Docker", "Kubernetes", "CI/CD", "AWS", "Terraform", "Ansible", "Git", "Bash", "Linux"];
+    const input = document.getElementById("autoInput");
+    let wordIndex = 0;
+    let charIndex = 0;
+    let typingForward = true;
+
+    function type() {
+      if (typingForward) {
+        if (charIndex < words[wordIndex].length) {
+          input.value += words[wordIndex][charIndex++];
+          setTimeout(type, 150);
+        } else {
+          typingForward = false;
+          setTimeout(type, 1000);
+        }
+      } else {
+        if (charIndex > 0) {
+          input.value = input.value.slice(0, --charIndex);
+          setTimeout(type, 100);
+        } else {
+          typingForward = true;
+          wordIndex = (wordIndex + 1) % words.length;
+          setTimeout(type, 300);
+        }
+      }
+    }
+    type();
+  </script>
+
+  <!-- Services -->
+  <section id="services" class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow">
+      <a href="projects.html" class="block">
         <h3 class="text-xl font-bold mb-2">Projects</h3>
         <p>A showcase of my latest development work, hosted on GitHub and deployed in the cloud.</p>
-        </div>
-        <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow">
+      </a>
+    </div>
+    <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow">
+      <a href="skills.html" class="block">
         <h3 class="text-xl font-bold mb-2">Skills</h3>
         <p>Languages, frameworks, and tools I use, including HTML, CSS, JS, React, Docker, and more.</p>
-        </div>
-        <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow">
+      </a>
+    </div>
+    <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow">
+      <a href="certifications.html" class="block">
         <h3 class="text-xl font-bold mb-2">Certifications</h3>
         <p>Online courses and certifications I've completed related to AWS, DevOps, and development.</p>
-        </div>
-    </section>
+      </a>
+    </div>
+</section>
 
-    <footer id="contact" class="mt-10 p-6 bg-gray-800 text-white text-center">
-        <p>Connect with me:</p>
-        <p>Email: harish@example.com | GitHub: @harish-n |      LinkedIn: https://www.linkedin.com/in/harish-n-shetty/</p>
-    </footer>
-    </body>
-    </html>
+
+  <!-- Footer -->
+  <footer id="contact" class="mt-10 p-6 bg-gray-800 text-white text-center">
+    <p>Connect with me:</p>
+    <p>Email: harish@example.com | GitHub: @harish-n | LinkedIn: https://www.linkedin.com/in/harish-n-shetty/</p>
+  </footer>
+</body>
+</html>

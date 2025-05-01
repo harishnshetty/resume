@@ -36,16 +36,22 @@
     }
 
     .glow-card {
-      transition: box-shadow 0.4s ease, transform 0.4s ease, background 0.4s ease;
-    }
-
-    .glow-card:hover {
-      background: linear-gradient(145deg, #dd89a64d, #8b77e240, #d879a140);
-      box-shadow: 0 0 25px 10px rgba(127, 90, 240, 0.3),
-                  0 0 40px 15px rgba(226, 204, 204, 0.2),
-                  0 0 60px 20px rgba(30, 138, 133, 0.2);
-      transform: translateY(-5px) scale(1.02);
-    }
+        background: white;
+        border-radius: 1rem;
+        transition: box-shadow 0.4s ease, transform 0.4s ease, background 0.4s ease;
+        cursor: pointer;
+      }
+      
+      .glow-card:hover {
+        background: rgba(230, 189, 119, 0.268);
+        box-shadow:
+          0 4px 20px rgba(127, 90, 240, 0.2),
+          0 8px 30px rgba(226, 204, 204, 0.15),
+          0 12px 40px rgba(30, 138, 133, 0.15);
+        transform: translateY(-4px) scale(1.01);
+      }
+      
+      
   </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col relative">
@@ -95,6 +101,13 @@
       <button onclick="toggleDarkMode()" class="bg-gray-600 px-3 py-1 rounded mt-3">Toggle Dark Mode</button>
     </div>
   </div>
+
+  <a href="about.html" class="hover:underline text-center">About</a>
+        <a href="education.html" class="hover:underline text-center">Education</a>
+        <a href="experience.html" class="hover:underline text-center">Experience</a>
+        <a href="projects.html" class="hover:underline text-center">Projects</a>
+        <a href="skills.html" class="hover:underline text-center">Skills</a>
+        <a href="certification.html" class="hover:underline text-center">Certifications</a>
 
   <!-- Main -->
   <main class="p-6 max-w-4xl mx-auto flex-grow">
