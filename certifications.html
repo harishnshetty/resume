@@ -124,21 +124,38 @@
             }
         }
 
-        .certificate-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem; /* Adjust spacing between box and image */
+        /* Basic styling for the new window content */
+        .certificate-details-table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            font-family: sans-serif;
         }
 
-        .certificate-image {
-          width: 100%;
-          height: auto;
-          max-height: 500px;
-          object-fit: contain;
-          border-radius: 0.375rem;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-      }
-      
+        .certificate-details-table th, .certificate-details-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .certificate-details-table th {
+            font-weight: bold;
+            background-color: #f2f2f2;
+        }
+
+        .certificate-details-table img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 10px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+        }
+        // tailwind.config.js
+module.exports = {
+  plugins: [require('@tailwindcss/line-clamp')],
+};
+
     </style>
     <script>
         function toggleDarkMode() {
@@ -150,6 +167,67 @@
             const overlay = document.getElementById('menuOverlay');
             menu.classList.toggle('hidden');
             overlay.classList.toggle('hidden');
+        }
+
+        function openCertificateDetails(title, description, imageSrc) {
+            const newWindow = window.open('', '_blank');
+            newWindow.document.write(`
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>${title}</title>
+                    <style>
+                        .certificate-details-table {
+                            width: 80%;
+                            margin: 20px auto;
+                            border-collapse: collapse;
+                            font-family: sans-serif;
+                        }
+
+                        .certificate-details-table th, .certificate-details-table td {
+                            border: 1px solid #ddd;
+                            padding: 10px;
+                            text-align: left;
+                        }
+
+                        .certificate-details-table th {
+                            font-weight: bold;
+                            background-color: #f2f2f2;
+                        }
+
+                        .certificate-details-table img {
+                            max-width: 100%;
+                            height: auto;
+                            display: block;
+                            margin: 10px auto;
+                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                            border-radius: 0.5rem;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <table class="certificate-details-table">
+                        <tr>
+                            <th>Title</th>
+                            <td>${title}</td>
+                        </tr>
+                        <tr>
+                            <th>Description</th>
+                            <td>${description}</td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Certificate Image</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><img src="${imageSrc}" alt="${title} Certificate"></td>
+                        </tr>
+                    </table>
+                </body>
+                </html>
+            `);
+            newWindow.document.close();
         }
     </script>
 </head>
@@ -186,34 +264,37 @@
             </nav>
         </header>
 
+
         <main class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="certificate-container">
-            <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow">
-                <h2 class="text-xl font-bold mb-2">AWS Certified Cloud Practitioner</h2>
-                <p>Credential earned in 2024 showcasing foundational knowledge of AWS Cloud.</p>
-            </div>
-            <img src="aws/aws.png"
-                 alt="AWS Certified Cloud Practitioner Certificate"
-                 class="certificate-image mx-auto w-full sm:max-w-md md:max-w-lg lg:max-w-xl" />
-        </div>
+          <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow cursor-pointer flex flex-row gap-4 items-start"
+               onclick="openCertificateDetails('AWS Certified Cloud Practitioner', '🎓 Certificate Unlocked! Excited to share that I successfully completed the Monolithic and Microservices Architecture Masterclass by Scaler on 30th April 2025! This insightful session deepened my understanding of: ✅ Differences between monolithic and microservices architectures ✅ Real-world use cases and migration strategies ✅ Best practices for scalable backend design Big thanks to Anshuman Singh and Abhimanyu Saxena for the valuable insights and guidance. Always looking forward to learning more and growing in the tech journey! 🚀', 'aws/aws.png')">
+              <img src="aws/aws.png" alt="AWS Certificate" class="w-60 h-60 rounded shadow-md object-contain" />
+              <div class="flex-1">
+                  <h2 class="text-xl font-bold mb-2">AWS Certified Cloud Practitioner</h2>
+                  <p class="line-clamp-5 text-sm">🎓 Certificate Unlocked! Excited to share that I successfully completed the Monolithic and Microservices Architecture Masterclass by Scaler on 30th April 2025! This insightful session deepened my understanding of: ✅ Differences between monolithic and microservices architectures ✅ Real-world use cases and migration strategies ✅ Best practices for scalable backend design Big thanks to Anshuman Singh and Abhimanyu Saxena for the valuable insights and guidance. Always looking forward to learning more and growing in the tech journey! 🚀</p>
+              </div>
+          </div>
+  
+          <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow cursor-pointer flex flex-row gap-4 items-start"
+               onclick="openCertificateDetails('DevOps on Udemy', 'Hands-on course covering CI/CD, Jenkins, Docker, Kubernetes, and infrastructure automation.', 'aws/aws.png')">
+              <img src="aws/aws.png" alt="DevOps Certificate" class="w-20 h-20 rounded shadow-md object-contain" />
+              <div class="flex-1">
+                  <h2 class="text-xl font-bold mb-2">DevOps on Udemy</h2>
+                  <p class="line-clamp-5 text-sm">Hands-on course covering CI/CD, Jenkins, Docker, Kubernetes, and infrastructure automation.</p>
+              </div>
+          </div>
+  
+          <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow cursor-pointer flex flex-row gap-4 items-start"
+               onclick="openCertificateDetails('Linux Basics for Beginners', 'Online training from Linux Foundation covering shell commands, file management, and scripting.', 'aws/aws.png')">
+              <img src="aws/aws.png" alt="Linux Certificate" class="w-20 h-20 rounded shadow-md object-contain" />
+              <div class="flex-1">
+                  <h2 class="text-xl font-bold mb-2">Linux Basics for Beginners</h2>
+                  <p class="line-clamp-5 text-sm">Online training from Linux Foundation covering shell commands, file management, and scripting.</p>
+              </div>
+          </div>
+      </main>
         
-
-            <div class="certificate-container">
-                <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow">
-                    <h2 class="text-xl font-bold mb-2">DevOps on Udemy</h2>
-                    <p>Hands-on course covering CI/CD, Jenkins, Docker, Kubernetes, and infrastructure automation.</p>
-                </div>
-                <img src="aws/aws.png" alt="DevOps on Udemy Certificate" class="certificate-image">
-            </div>
-
-            <div class="certificate-container">
-                <div class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow">
-                    <h2 class="text-xl font-bold mb-2">Linux Basics for Beginners</h2>
-                    <p>Online training from Linux Foundation covering shell commands, file management, and scripting.</p>
-                </div>
-                <img src="aws/aws.png" alt="Linux Basics for Beginners Certificate" class="certificate-image">
-            </div>
-        </main>
+        
 
         <footer id="contact" class="bg-white text-black text-center py-4 px-2">
             <div class="flex flex-wrap justify-center items-center gap-4 text-sm">
@@ -230,5 +311,99 @@
             </div>
         </footer>
     </div>
+    <script>
+      function toggleDarkMode() {
+          document.documentElement.classList.toggle('dark');
+      }
+
+      function toggleMobileMenu() {
+          const menu = document.getElementById('mobileMenu');
+          const overlay = document.getElementById('menuOverlay');
+          menu.classList.toggle('hidden');
+          overlay.classList.toggle('hidden');
+      }
+
+      function openCertificateDetails(title, description, imageSrc) {
+          const newWindow = window.open('', '_blank');
+          newWindow.document.write(`
+              <!DOCTYPE html>
+              <html lang="en">
+              <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>${title}</title>
+                  <style>
+                      body {
+                          font-family: sans-serif;
+                          margin: 20px;
+                          text-align: center;
+                      }
+
+                      .home-link {
+                          display: block;
+                          margin-bottom: 20px;
+                          text-align: center;
+                          font-weight: bold;
+                          color: #3b82f6;
+                          text-decoration: none;
+                          cursor: pointer;
+                      }
+
+                      .home-link:hover {
+                          text-decoration: underline;
+                      }
+
+                      .certificate-details-table {
+                          width: 80%;
+                          margin: 0 auto;
+                          border-collapse: collapse;
+                      }
+
+                      .certificate-details-table th, .certificate-details-table td {
+                          border: 1px solid #ddd;
+                          padding: 10px;
+                          text-align: left;
+                          white-space: pre-wrap; /* Preserve line breaks */
+                      }
+
+                      .certificate-details-table th {
+                          font-weight: bold;
+                          background-color: #f2f2f2;
+                      }
+
+                      .certificate-details-table img {
+                          max-width: 100%;
+                          height: auto;
+                          display: block;
+                          margin: 10px auto;
+                          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                          border-radius: 0.5rem;
+                      }
+                  </style>
+              </head>
+              <body>
+                  <div onclick="window.close()" class="home-link">Go Back</div>
+                  <table class="certificate-details-table">
+                      <tr>
+                          <th>Title</th>
+                          <td>${title}</td>
+                      </tr>
+                      <tr>
+                          <th>Details</th>
+                          <td style="text-align: left;">${description}</td>
+                      </tr>
+                      <tr>
+                          <th colspan="2">Certificate Image</th>
+                      </tr>
+                      <tr>
+                          <td colspan="2"><img src="${imageSrc}" alt="${title} Certificate"></td>
+                      </tr>
+                  </table>
+              </body>
+              </html>
+          `);
+          newWindow.document.close();
+      }
+  </script>
 </body>
 </html>
