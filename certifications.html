@@ -8,47 +8,48 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
   <style>
+    @import url('https://cdn.jsdelivr.net/npm/@tailwindcss/line-clamp@0.2.2');
+  
     html, body {
-      height: 100%; /* Ensures body takes up the full viewport height */
+      height: 100%;
       margin: 0;
     }
-
+  
     body {
       display: flex;
-      flex-direction: column; /* Stack the content and footer vertically */
+      flex-direction: column;
       background: linear-gradient(-45deg, #667eea, #cab6b6, #365fcd, #667eea);
       background-size: 400% 400%;
       animation: gradientShift 10s ease infinite;
-      flex-grow: 1; /* Ensures the body grows to fill available space */
+      flex-grow: 1;
     }
-
+  
     footer {
-      margin-top: auto; /* Ensures footer is at the bottom */
-      padding: 1rem; /* Adjust padding to prevent overflow */
+      margin-top: auto;
+      padding: 1rem;
     }
-    
+  
     footer .flex {
-      flex-wrap: wrap; /* Allows items to wrap in case of space constraints */
-      justify-content: center; /* Centers the footer items */
-      gap: 1rem; /* Adds space between items */
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
     }
-    
+  
     footer img {
-      width: 2.5rem; /* Set width to 10rem (w-10) */
-      height: 2.5rem; /* Set height to 10rem (h-10) */
+      width: 2.5rem;
+      height: 2.5rem;
     }
-    
+  
     footer span {
-      font-size: 1rem; /* Adjust the font size to match the icon size */
+      font-size: 1rem;
     }
-    
-
+  
     @keyframes gradientShift {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
+  
     .gradient-text {
       background: linear-gradient(90deg, #7f5af0, #e2cccc, #1e8a85);
       background-size: 200% 200%;
@@ -59,13 +60,13 @@
       animation: textGlow 6s ease infinite;
       font-weight: bold;
     }
-
+  
     @keyframes textGlow {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
+  
     .glow-button {
       background: linear-gradient(90deg, #7f5af0, #e2cccc, #1e8a85);
       background-size: 200% 200%;
@@ -77,123 +78,106 @@
       box-shadow: 0 0 10px rgba(127, 90, 240, 0.8);
       transition: transform 0.2s, box-shadow 0.2s;
     }
-
+  
     @keyframes glowGradient {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
+  
     .glow-button:hover {
       transform: scale(1.05);
       box-shadow: 0 0 15px rgba(127, 90, 240, 1);
     }
-
+  
     .glow-card {
       transition: box-shadow 0.4s ease, transform 0.4s ease, background 0.4s ease;
       cursor: pointer;
     }
-
+  
     .glow-card:hover {
       box-shadow:  0 0 25px 10px rgba(127, 90, 240, 0.3),
                    0 0 40px 15px rgba(226, 204, 204, 0.2),
                    0 0 60px 20px rgba(30, 138, 133, 0.2); 
       transform: translateY(-5px) scale(1.02);
     }
-
+  
     nav a {
       color: #1a202c;
     }
-
+  
     .dark nav a {
       color: #f9fafb;
     }
-
+  
     nav a:hover {
       text-decoration: underline;
       color: #3b82f6;
     }
-
+  
     #mobileMenu {
       background-color: #ffffff;
     }
-
+  
     .dark #mobileMenu {
       background-color: #1f2937;
     }
-
+  
     @media (min-width: 640px) {
       #mobileMenu {
         background-color: transparent;
       }
-
+  
       #mobileMenu a {
         color: #ffffff;
       }
     }
+  
+    .line-clamp-6 {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      -webkit-line-clamp: 6;
+    }
   </style>
-
+  
   <script>
-    function toggleDarkMode() {
-      document.documentElement.classList.toggle('dark');
-    }
-
-    function toggleMobileMenu() {
-      const menu = document.getElementById('mobileMenu');
-      const overlay = document.getElementById('menuOverlay');
-      menu.classList.toggle('hidden');
-      overlay.classList.toggle('hidden');
-    }
-
-    // Extracts file ID from various Drive URL formats
-    function getImageId(url) {
-      const match = url.match(/(?:\/d\/|id=)([a-zA-Z0-9_-]+)/);
-      return match ? match[1] : null;
-    }
-
-    // Converts Drive URL to lh3.googleusercontent.com format
-    function convertToLh3Url(driveUrl) {
-      const id = getImageId(driveUrl);
-      return id ? `https://lh3.googleusercontent.com/d/${id}` : '';
-    }
-
     async function fetchCertifications() {
       const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/1_QCMr-1j-LBO8zDbF1je3S3qCg6WH6J4JxH6XIita64/values/Sheet1?key=AIzaSyBwnJTt3tZV61gebywzYb8MIDk4CTcleHQ');
       const data = await response.json();
       const certifications = data.values.slice(1); // Skip headers
-
+  
       certifications.sort((a, b) => new Date(b[0]) - new Date(a[0]));
-
+  
       const container = document.getElementById('certifications-main');
-
+  
       certifications.forEach(cert => {
         const [timestamp, title, description, imageLinkRaw] = cert;
         const imageLink = convertToLh3Url(imageLinkRaw);
-
+  
         const certCard = document.createElement('div');
         certCard.className = 'glow-card bg-white dark:bg-gray-800 p-6 rounded shadow flex flex-col md:flex-row gap-4 items-center md:items-start';
-
+  
         const certImg = document.createElement('img');
         certImg.alt = title;
         certImg.className = 'w-60 h-60 rounded shadow-md object-contain';
         certImg.src = imageLink;
-
+  
         const certInfo = document.createElement('div');
         certInfo.className = 'flex-1 text-center md:text-left';
-
+  
         const certTitle = document.createElement('h2');
         certTitle.className = 'text-xl font-bold mb-2';
         certTitle.textContent = title;
-
+  
         const certDesc = document.createElement('p');
-        certDesc.className = 'line-clamp-5 text-sm';
+        certDesc.className = 'line-clamp-6 text-sm';
         certDesc.textContent = description;
-
+  
         certInfo.append(certTitle, certDesc);
         certCard.append(certImg, certInfo);
         container.appendChild(certCard);
-
-        // Click handler to open certification in new tab
+  
         certCard.addEventListener('click', () => {
           const certData = {
             title: title,
@@ -205,9 +189,20 @@
         });
       });
     }
-
+  
+    function getImageId(url) {
+      const match = url.match(/(?:\/d\/|id=)([a-zA-Z0-9_-]+)/);
+      return match ? match[1] : null;
+    }
+  
+    function convertToLh3Url(driveUrl) {
+      const id = getImageId(driveUrl);
+      return id ? `https://lh3.googleusercontent.com/d/${id}` : '';
+    }
+  
     window.onload = fetchCertifications;
   </script>
+  
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen relative">
   <div class="flex flex-col min-h-screen">
