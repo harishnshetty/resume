@@ -91,6 +91,7 @@
 
     .glow-card {
       transition: box-shadow 0.4s ease, transform 0.4s ease, background 0.4s ease;
+      cursor: pointer;
     }
 
     .glow-card:hover {
@@ -143,174 +144,116 @@
       menu.classList.toggle('hidden');
       overlay.classList.toggle('hidden');
     }
+
+    // Extracts file ID from various Drive URL formats
+    function getImageId(url) {
+      const match = url.match(/(?:\/d\/|id=)([a-zA-Z0-9_-]+)/);
+      return match ? match[1] : null;
+    }
+
+    // Converts Drive URL to lh3.googleusercontent.com format
+    function convertToLh3Url(driveUrl) {
+      const id = getImageId(driveUrl);
+      return id ? `https://lh3.googleusercontent.com/d/${id}` : '';
+    }
+
+    async function fetchCertifications() {
+      const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/1_QCMr-1j-LBO8zDbF1je3S3qCg6WH6J4JxH6XIita64/values/Sheet1?key=AIzaSyBwnJTt3tZV61gebywzYb8MIDk4CTcleHQ');
+      const data = await response.json();
+      const certifications = data.values.slice(1); // Skip headers
+
+      certifications.sort((a, b) => new Date(b[0]) - new Date(a[0]));
+
+      const container = document.getElementById('certifications-main');
+
+      certifications.forEach(cert => {
+        const [timestamp, title, description, imageLinkRaw] = cert;
+        const imageLink = convertToLh3Url(imageLinkRaw);
+
+        const certCard = document.createElement('div');
+        certCard.className = 'glow-card bg-white dark:bg-gray-800 p-6 rounded shadow flex flex-col md:flex-row gap-4 items-center md:items-start';
+
+        const certImg = document.createElement('img');
+        certImg.alt = title;
+        certImg.className = 'w-60 h-60 rounded shadow-md object-contain';
+        certImg.src = imageLink;
+
+        const certInfo = document.createElement('div');
+        certInfo.className = 'flex-1 text-center md:text-left';
+
+        const certTitle = document.createElement('h2');
+        certTitle.className = 'text-xl font-bold mb-2';
+        certTitle.textContent = title;
+
+        const certDesc = document.createElement('p');
+        certDesc.className = 'line-clamp-5 text-sm';
+        certDesc.textContent = description;
+
+        certInfo.append(certTitle, certDesc);
+        certCard.append(certImg, certInfo);
+        container.appendChild(certCard);
+
+        // Click handler to open certification in new tab
+        certCard.addEventListener('click', () => {
+          const certData = {
+            title: title,
+            description: description,
+            imageLink: imageLink
+          };
+          sessionStorage.setItem('selectedCert', JSON.stringify(certData));
+          window.open('certification-detail.html', '_blank');
+        });
+      });
+    }
+
+    window.onload = fetchCertifications;
   </script>
 </head>
-
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen relative">
+  <div class="flex flex-col min-h-screen">
+    <!-- Overlay -->
+    <div id="menuOverlay" onclick="toggleMobileMenu()" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40"></div>
 
-  <!-- Overlay -->
-  <div id="menuOverlay" onclick="toggleMobileMenu()" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40"></div>
-
-  <header class="bg-gray-800 text-white p-2 flex justify-between items-center">
-    <h1 class="text-3xl gradient-text">Certifications</h1>
-
-    <nav class="relative w-full sm:w-auto text-gray-900 dark:text-gray-100">
-      <div class="sm:hidden flex justify-end">
-        <button onclick="toggleMobileMenu()" class="text-white focus:outline-none text-2xl">☰</button>
-      </div>
-
-      <!-- FIXED: Menu behavior on desktop -->
-      <div id="mobileMenu"
-        class="hidden sm:flex sm:flex-row sm:gap-4 gap-2 items-center sm:static absolute top-16 left-1/2 sm:left-auto transform sm:transform-none -translate-x-1/2 sm:translate-x-0 w-11/12 sm:w-auto z-50 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl flex-col sm:flex-row">
-
-        <div class="w-full flex justify-end sm:hidden mb-2">
-          <button onclick="toggleMobileMenu()" class="text-gray-600 dark:text-gray-300 text-xl font-bold">×</button>
+    <!-- Header -->
+    <header class="bg-gray-800 text-white p-2 flex justify-between items-center">
+      <h1 class="text-3xl gradient-text">Certifications</h1>
+      <nav class="relative w-full sm:w-auto text-gray-900 dark:text-gray-100">
+        <div class="sm:hidden flex justify-end">
+          <button onclick="toggleMobileMenu()" class="text-white text-2xl">☰</button>
         </div>
-
-        <div class="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto text-center">
-          <a href="index.html" class="hover:underline">Home</a>
-          <a href="certifications.html" class="hover:underline">Certifications</a>
-          <a href="projects.html" class="hover:underline">Projects</a>
-          <a href="skills.html" class="hover:underline">Skills</a>
-          <a href="education.html" class="hover:underline">Education</a>
-          <a href="experience.html" class="hover:underline">Experience</a>
-          <a href="about.html" class="hover:underline">About</a>
+        <div id="mobileMenu"
+          class="hidden sm:flex sm:flex-row sm:gap-4 gap-2 items-center absolute sm:static top-16 left-1/2 transform -translate-x-1/2 sm:translate-x-0 w-11/12 sm:w-auto z-50 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl flex-col sm:flex-row">
+          <div class="w-full flex justify-end sm:hidden mb-2">
+            <button onclick="toggleMobileMenu()" class="text-gray-600 dark:text-gray-300 text-xl font-bold">×</button>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto text-center">
+            <a href="index.html">Home</a>
+            <a href="certifications.html">Certifications</a>
+            <a href="projects.html">Projects</a>
+            <a href="skills.html">Skills</a>
+            <a href="education.html">Education</a>
+            <a href="experience.html">Experience</a>
+            <a href="about.html">About</a>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full sm:w-auto mt-4 sm:mt-0 text-sm sm:text-base">
+            <a href="contact.html" class="bg-gray-600 px-2 py-2 rounded text-center truncate">Contact</a>
+            <a href="./resume.pdf" download class="glow-button text-center truncate">⬇️ Resume</a>
+          </div>
         </div>
+      </nav>
+    </header>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full sm:w-auto mt-4 sm:mt-0 text-sm sm:text-base">
-          <a href="contact.html" class="bg-gray-600 px-2 py-2 rounded text-center truncate">Contact</a>
-          <a href="./resume.pdf" download class="glow-button text-center truncate">⬇️ Resume</a>
-        </div>
-      </div>
-    </nav>
-  </header>
-
-  <main class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mt-20">
-    <!-- Card 1 -->
-    <a href="javascript:void(0);" onclick="openCertificateDetails('AWS Certified Cloud Practitioner', 
-    '🎓 Certificate Unlocked! Excited to share that I successfully completed the Monolithic and Microservices Architecture Masterclass by Scaler on 30th April 2025! This insightful session deepened my understanding of: ✅ Differences between monolithic and microservices architectures ✅ Real-world use cases and migration strategies ✅ Best practices for scalable backend design Big thanks to Anshuman Singh and Abhimanyu Saxena for the valuable insights and guidance. Always looking forward to learning more and growing in the tech journey! 🚀', 
-    'cert/19-03-2025-linux-udemy.jpg')"
-       class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow flex flex-col md:flex-row gap-4 items-center md:items-start">
-      <img src="cert/19-03-2025-linux-udemy.jpg" alt="AWS Certificate" class="w-60 h-60 rounded shadow-md object-contain" />
-      <div class="flex-1 text-center md:text-left">
-        <h2 class="text-xl font-bold mb-2">AWS Certified Cloud Practitioner</h2>
-        <p class="line-clamp-5 text-sm">🎓 Certificate Unlocked! Excited to share that I successfully completed the Monolithic and Microservices Architecture Masterclass by Scaler on 30th April 2025...</p>
-      </div>
-    </a>
-  
-    <!-- Card 2 -->
-    <a href="javascript:void(0);" onclick="openCertificateDetails('DevOps on Udemy', 
-    'Hands-on course covering CI/CD, Jenkins, Docker, Kubernetes, and infrastructure automation.', 
-    'cert/19-03-2025-linux-udemy.jpg')"
-       class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow flex flex-col md:flex-row gap-4 items-center md:items-start">
-      <img src="cert/19-03-2025-linux-udemy.jpg" alt="DevOps Certificate" class="w-60 h-60 rounded shadow-md object-contain" />
-      <div class="flex-1 text-center md:text-left">
-        <h2 class="text-xl font-bold mb-2">DevOps on Udemy</h2>
-        <p class="line-clamp-5 text-sm">Hands-on course covering CI/CD, Jenkins, Docker, Kubernetes, and infrastructure automation.</p>
-      </div>
-    </a>
-  
-    <!-- Card 3 -->
-    <a href="javascript:void(0);" onclick="openCertificateDetails('Linux Basics for Beginners', 
-    'Online training from Linux Foundation covering shell commands, file management, and scripting.', 
-    'cert/19-03-2025-linux-udemy.jpg')"
-       class="glow-card bg-white dark:bg-gray-800 p-6 rounded shadow flex flex-col md:flex-row gap-4 items-center md:items-start">
-      <img src="cert/19-03-2025-linux-udemy.jpg" alt="Linux Certificate" class="w-60 h-60 rounded shadow-md object-contain" />
-      <div class="flex-1 text-center md:text-left">
-        <h2 class="text-xl font-bold mb-2">Linux Basics for Beginners</h2>
-        <p class="line-clamp-5 text-sm">Online training from Linux Foundation covering shell commands, file management, and scripting.</p>
-      </div>
-    </a>
+  <main id="certifications-main" class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mt-20">
+    <!-- Content will be dynamically inserted here -->
   </main>
-  
-       
-        
 
-        <footer id="contact" class="bg-white text-black text-center py-4 px-2">
-            <div class="flex flex-wrap justify-center items-center gap-4 text-sm">
-                <a href="mailto:harishn662@example.com" class="hover:opacity-75" aria-label="Email">
-                    <img src="img/gmail.svg" alt="Email" class="w-10 h-10" />
-                </a>
-                <span>harishn662@example.com</span>
-                <a href="https://github.com/harishnshetty" target="_blank" class="hover:opacity-75" aria-label="GitHub">
-                    <img src="img/github.svg" alt="GitHub" class="w-10 h-10" />
-                </a>
-                <a href="https://www.linkedin.com/in/harish-n-shetty/" target="_blank" class="hover:opacity-75" aria-label="LinkedIn">
-                    <img src="img/linkedin.svg" alt="LinkedIn" class="w-10 h-10" />
-                </a>
-            </div>
-        </footer>
+  <footer id="contact" class="bg-white text-black text-center py-4 px-2">
+    <div class="flex flex-wrap justify-center items-center gap-4 text-sm">
+      <a href="mailto:harishn662@example.com" class="hover:opacity-75" aria-label="Email">
+        <img src="img/gmail.svg" alt="Email" class="w-10 h-10" />
+      </a>
+      <span>harishn662@example.com</span>
     </div>
-    <script>
-      function openCertificateDetails(title, description, imageSrc) {
-        const newWindow = window.open('', '_blank');
-        
-        // Writing content to the new window
-        newWindow.document.write(`
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>${title}</title>
-                <style>
-                    body {
-                        font-family: sans-serif;
-                        margin: 20px;
-                        text-align: center;
-                    }
-                    .home-link {
-                        display: block;
-                        margin-bottom: 20px;
-                        text-align: center;
-                        font-weight: bold;
-                        color: #3b82f6;
-                        text-decoration: none;
-                        cursor: pointer;
-                    }
-                    .home-link:hover {
-                        text-decoration: underline;
-                    }
-                    .certificate-details-table {
-                        width: 80%;
-                        margin: 0 auto;
-                        border-collapse: collapse;
-                    }
-                    .certificate-details-table th, .certificate-details-table td {
-                        border: 1px solid #ddd;
-                        padding: 10px;
-                        text-align: left;
-                        white-space: pre-wrap; /* Preserve line breaks */
-                    }
-                    .certificate-details-table th {
-                        font-weight: bold;
-                        background-color: #f2f2f2;
-                    }
-                    .certificate-details-table img {
-                        max-width: 100%;
-                        height: auto;
-                        display: block;
-                        margin: 10px auto;
-                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                        border-radius: 0.5rem;
-                    }
-                </style>
-            </head>
-            <body>
-                <!-- Go Back Link that will close the current tab -->
-                <a href="javascript:window.close();" class="home-link">Go Back</a>
-                <h1>${title}</h1>
-                <p>${description}</p>
-                <img src="${imageSrc}" alt="${title} Certificate" />
-            </body>
-            </html>
-        `);
-        
-        // Close the new window immediately after writing content (this should not affect the original window)
-        newWindow.document.close();
-      }
-      
-      
-  </script>
+  </footer>
 </body>
 </html>
