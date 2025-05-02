@@ -118,16 +118,16 @@
     #mobileMenu {
       background-color: #ffffff;
     }
-  
+
     .dark #mobileMenu {
       background-color: #1f2937;
     }
-  
+
     @media (min-width: 640px) {
       #mobileMenu {
         background-color: transparent;
       }
-  
+
       #mobileMenu a {
         color: #ffffff;
       }
@@ -201,6 +201,15 @@
     }
   
     window.onload = fetchCertifications;
+    function toggleDarkMode() {
+      document.documentElement.classList.toggle('dark');
+    }
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const overlay = document.getElementById('menuOverlay');
+      menu.classList.toggle('hidden');
+      overlay.classList.toggle('hidden');
+    }
   </script>
   
 </head>
