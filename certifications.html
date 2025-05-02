@@ -201,9 +201,9 @@
     }
   
     window.onload = fetchCertifications;
-    function toggleDarkMode() {
-      document.documentElement.classList.toggle('dark');
-    }
+ function toggleDarkMode() {
+        document.documentElement.classList.toggle('dark');
+      }
     function toggleMobileMenu() {
       const menu = document.getElementById('mobileMenu');
       const overlay = document.getElementById('menuOverlay');
@@ -253,11 +253,17 @@
 
   <footer id="contact" class="bg-white text-black text-center py-4 px-2">
     <div class="flex flex-wrap justify-center items-center gap-4 text-sm">
-      <a href="mailto:harishn662@example.com" class="hover:opacity-75" aria-label="Email">
-        <img src="img/gmail.svg" alt="Email" class="w-10 h-10" />
-      </a>
-      <span>harishn662@example.com</span>
-    </div>
-  </footer>
+  <a href="mailto:harishn662@example.com" class="hover:opacity-75" aria-label="Email">
+    <img src="img/gmail.svg" alt="Email" class="w-10 h-10" />
+  </a>
+  <span>harishn662@example.com</span>
+  <a href="https://github.com/harishnshetty" target="_blank" class="hover:opacity-75" aria-label="GitHub">
+    <img src="img/github.svg" alt="GitHub" class="w-10 h-10" />
+  </a>
+  <a href="https://www.linkedin.com/in/harish-n-shetty/" target="_blank" class="hover:opacity-75" aria-label="LinkedIn">
+    <img src="img/linkedin.svg" alt="LinkedIn" class="w-10 h-10" />
+  </a>
+</div>
+</footer>
 </body>
 </html>
