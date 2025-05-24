@@ -50,3 +50,14 @@ select#appSelect {
   font-size: 16px;
   padding: 5px;
 }
+@media (max-width: 600px) {
+  textarea {
+    height: 200px;
+  }
+  select#appSelect {
+    width: 100%;
+  }
+  button {
+    width: 100%;
+  }
+}

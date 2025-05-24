@@ -1,6 +1,10 @@
 // Copy playbook text to clipboard
 function copyToClipboard() {
   const output = document.getElementById('output');
+  if (!output) {
+    alert('Output area not found!');
+    return;
+  }
   output.select();
   output.setSelectionRange(0, 99999); // For mobile devices
 
@@ -13,35 +17,57 @@ function copyToClipboard() {
 
 // Show/hide app option groups based on selection
 function toggleAppOptions() {
-  const selectedApp = document.getElementById('appSelect').value;
+  const appSelect = document.getElementById('appSelect');
+  if (!appSelect) return;
 
-  document.getElementById('nginxOptions').style.display = 'none';
-  document.getElementById('tomcatOptions').style.display = 'none';
-  document.getElementById('httpdOptions').style.display = 'none';
+  const selectedApp = appSelect.value;
 
+  // Hide all app options first
+  ['nginxOptions', 'tomcatOptions', 'httpdOptions', 'lampOptions'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+
+  // Show the selected app options group
   if (selectedApp === 'nginx') {
-    document.getElementById('nginxOptions').style.display = 'block';
+    const el = document.getElementById('nginxOptions');
+    if (el) el.style.display = 'block';
   } else if (selectedApp === 'tomcat') {
-    document.getElementById('tomcatOptions').style.display = 'block';
+    const el = document.getElementById('tomcatOptions');
+    if (el) el.style.display = 'block';
   } else if (selectedApp === 'httpd') {
-    document.getElementById('httpdOptions').style.display = 'block';
+    const el = document.getElementById('httpdOptions');
+    if (el) el.style.display = 'block';
+  } else if (selectedApp === 'lamp') {
+    const el = document.getElementById('lampOptions');
+    if (el) el.style.display = 'block';
   }
 }
 
+// Generate playbook YAML based on selected options
 function generatePlaybook() {
-  const os = document.getElementById('osSelect').value;
-  const app = document.getElementById('appSelect').value;
+  const osSelect = document.getElementById('osSelect');
+  const appSelect = document.getElementById('appSelect');
+  if (!osSelect || !appSelect) {
+    alert('OS or Application select not found!');
+    return;
+  }
 
+  const os = osSelect.value;
+  const app = appSelect.value;
+
+  // Determine package manager based on OS
   let pkgManager = 'apt';
   if (os === 'amazon') pkgManager = 'yum';
   else if (os === 'redhat') pkgManager = 'dnf';
 
   let tasks = [];
 
+  // Add YAML header comments
   tasks.push(`# Target OS: ${os}`);
   tasks.push(`# Selected Application: ${app}`);
 
-  // Common user creation
+  // User creation task (if checked)
   if (document.getElementById('createUser')?.checked) {
     tasks.push(`- name: Create webadmin user
   user:
@@ -50,7 +76,7 @@ function generatePlaybook() {
     create_home: yes`);
   }
 
-  // nginx tasks
+  // App-specific tasks
   if (app === 'nginx') {
     if (document.getElementById('installNginx')?.checked) {
       tasks.push(`- name: Ensure Nginx is installed
@@ -99,7 +125,6 @@ function generatePlaybook() {
     }
   }
 
-  // tomcat tasks
   if (app === 'tomcat') {
     if (document.getElementById('installTomcat')?.checked) {
       tasks.push(`- name: Install Tomcat
@@ -135,7 +160,6 @@ function generatePlaybook() {
     }
   }
 
-  // httpd tasks
   if (app === 'httpd') {
     if (document.getElementById('installHttpd')?.checked) {
       tasks.push(`- name: Install HTTPD
@@ -165,10 +189,8 @@ function generatePlaybook() {
     }
   }
 
-  // lamp tasks
   if (app === 'lamp') {
     if (document.getElementById('installLamp')?.checked) {
-      // Install apache2, mysql-server, php (package names for ubuntu; adapt for other OSes as needed)
       tasks.push(`- name: Install Apache, MySQL and PHP
   ${pkgManager}:
     name:
@@ -215,22 +237,37 @@ function generatePlaybook() {
     }
   }
 
+  // Compose final playbook YAML
   const playbook = `- name: Auto-generated playbook for ${os} - ${app}
   hosts: localhost
   become: yes
   tasks:
-${tasks.join('\n\n')}`;
+${tasks.map(t => '  ' + t.replace(/\n/g, '\n  ')).join('\n\n')}`;
 
-  document.getElementById('output').value = playbook;
+  const output = document.getElementById('output');
+  if (output) {
+    output.value = playbook;
+  } else {
+    alert('Output textarea not found!');
+  }
 }
 
-document.getElementById('lampOptions').style.display = 'none';
-
-if (selectedApp === 'lamp') {
-  document.getElementById('lampOptions').style.display = 'block';
-}
-
-// Initialize app options visibility on load
+// Initialize app options visibility on page load
 window.onload = () => {
   toggleAppOptions();
+
+  const appSelect = document.getElementById('appSelect');
+  if (appSelect) {
+    appSelect.addEventListener('change', toggleAppOptions);
+  }
+
+  const generateBtn = document.getElementById('generateBtn');
+  if (generateBtn) {
+    generateBtn.addEventListener('click', generatePlaybook);
+  }
+
+  const copyBtn = document.getElementById('copyBtn');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', copyToClipboard);
+  }
 };

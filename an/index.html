@@ -1,141 +1,314 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ansible YAML Generator</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="bg-gray-100 text-gray-900 min-h-screen flex items-center justify-center">
-    <div class="max-w-4xl w-full p-6 bg-white rounded-xl shadow-md">
-      <h1 class="text-2xl font-bold mb-6 text-center">Ansible YAML Generator</h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ansible YAML Generator with Config Editor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900 min-h-screen flex items-center justify-center p-6">
+  <div class="max-w-4xl w-full bg-white rounded-xl shadow-md p-6">
+    <h1 class="text-2xl font-bold mb-6 text-center">Ansible YAML Generator</h1>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label for="os" class="font-semibold">Select OS:</label>
-          <select id="os" class="w-full mt-1 p-2 border rounded">
-            <option value="ubuntu">Ubuntu</option>
-            <option value="redhat">RedHat</option>
-            <option value="amazon">Amazon Linux</option>
-            <option value="alpine">Alpine</option>
-          </select>
-        </div>
-
-        <div>
-          <label for="app" class="font-semibold">Select Application:</label>
-          <select id="app" class="w-full mt-1 p-2 border rounded">
-            <option value="nginx">Nginx</option>
-            <option value="httpd">HTTPD</option>
-            <option value="apache2">Apache2</option>
-            <option value="mysql">MySQL</option>
-            <option value="mariadb">MariaDB</option>
-            <option value="maven">Maven</option>
-            <option value="openjdk11">OpenJDK 11</option>
-            <option value="openjdk17">OpenJDK 17</option>
-            <option value="openjdk21">OpenJDK 21</option>
-            <option value="mongodb">MongoDB</option>
-            <option value="nodejs">Node.js</option>
-          </select>
-        </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label for="os" class="font-semibold">Select OS:</label>
+        <select id="os" class="w-full mt-1 p-2 border rounded">
+          <option value="ubuntu">Ubuntu</option>
+          <option value="redhat">RedHat</option>
+          <option value="amazon">Amazon Linux</option>
+          <option value="alpine">Alpine</option>
+        </select>
       </div>
 
-      <div class="mt-4">
-        <p class="font-semibold mb-1">Actions:</p>
-        <label class="inline-flex items-center mr-4">
-          <input type="checkbox" value="install" class="action mr-2"> Install
-        </label>
-        <label class="inline-flex items-center">
-          <input type="checkbox" value="remove" class="action mr-2"> Remove
-        </label>
-      </div>
-
-      <div class="mt-4">
-        <p class="font-semibold mb-1">Optional Features:</p>
-        <label class="inline-flex items-center mr-4">
-          <input type="checkbox" value="config" class="feature mr-2"> Config
-        </label>
-        <label class="inline-flex items-center mr-4">
-          <input type="checkbox" value="ssl" class="feature mr-2"> SSL
-        </label>
-        <label class="inline-flex items-center">
-          <input type="checkbox" value="firewall" class="feature mr-2"> Firewall
-        </label>
-      </div>
-
-      <div class="mt-6 flex gap-4">
-        <button onclick="generateYAML()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Generate YAML</button>
-        <button onclick="downloadYAML()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Download YAML</button>
-      </div>
-
-      <div class="mt-6">
-        <label class="font-semibold">Generated YAML:</label>
-        <pre id="output" class="bg-gray-200 p-4 rounded whitespace-pre-wrap mt-2"></pre>
+      <div>
+        <label for="app" class="font-semibold">Select Application:</label>
+        <select id="app" class="w-full mt-1 p-2 border rounded">
+          <option value="nginx">Nginx</option>
+          <option value="httpd">HTTPD</option>
+          <option value="apache2">Apache2</option>
+          <option value="mysql">MySQL</option>
+          <option value="mariadb">MariaDB</option>
+          <option value="maven">Maven</option>
+          <option value="openjdk11">OpenJDK 11</option>
+          <option value="openjdk17">OpenJDK 17</option>
+          <option value="openjdk21">OpenJDK 21</option>
+          <option value="mongodb">MongoDB</option>
+          <option value="nodejs">Node.js</option>
+        </select>
       </div>
     </div>
 
-    <script>
-      function generateYAML() {
-        const os = document.getElementById("os").value;
-        const app = document.getElementById("app").value;
-        const actions = [...document.querySelectorAll(".action:checked")].map(el => el.value);
-        const features = [...document.querySelectorAll(".feature:checked")].map(el => el.value);
+    <div class="mt-4">
+      <p class="font-semibold mb-1">Actions:</p>
+      <label class="inline-flex items-center mr-4">
+        <input type="checkbox" value="sys-update" class="action mr-2" /> System update
+      </label>
+      <label class="inline-flex items-center mr-4">
+        <input type="checkbox" value="install" class="action mr-2" /> Install
+      </label>
+      <label class="inline-flex items-center">
+        <input type="checkbox" value="reload" class="action mr-2" /> Reload
+      </label>
+      <label class="inline-flex items-center">
+        <input type="checkbox" value="remove" class="action mr-2" /> Remove
+      </label>
+    </div>
 
-        let yaml = `- name: Manage ${app} on ${os}\n  hosts: all\n  become: true\n  tasks:\n`;
+    <div class="mt-4">
+      <p class="font-semibold mb-1">Optional Features:</p>
+      <label class="inline-flex items-center mr-4">
+        <input type="checkbox" id="configCheckbox" value="config" class="feature mr-2" /> Config
+      </label>
+      <label class="inline-flex items-center mr-4">
+        <input type="checkbox" id="configCheckbox" value="user" class="feature mr-2" /> User Create
+      </label>
+      <label class="inline-flex items-center mr-4">
+        <input type="checkbox" id="configCheckbox" value="cp-content" class="feature mr-2" /> Copy Content
+      </label>
+      <label class="inline-flex items-center mr-4">
+        <input type="checkbox" value="ssl" class="feature mr-2" /> SSL
+      </label>
+      <label class="inline-flex items-center">
+        <input type="checkbox" value="firewall" class="feature mr-2" /> Firewall
+      </label>
+    </div>
 
-        if (actions.includes("install")) {
-          yaml += getInstallTask(os, app);
-        }
+    <!-- Config Editor textarea -->
+    <div id="configEditorContainer" class="mt-4 hidden">
+      <label for="configEditor" class="font-semibold">Edit Configuration Template:</label>
+      <textarea
+        id="configEditor"
+        rows="12"
+        class="w-full mt-2 p-2 border rounded font-mono text-sm"
+      ></textarea>
+    </div>
 
-        if (actions.includes("remove")) {
-          yaml += getRemoveTask(os, app);
-        }
+    <div class="mt-6 flex gap-4">
+      <button onclick="generateYAML()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+        Generate YAML
+      </button>
+      <button onclick="downloadYAML()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+        Download YAML
+      </button>
+    </div>
 
-        features.forEach(feature => {
-          yaml += getFeatureTask(app, feature);
-        });
+    <div class="mt-6">
+      <label class="font-semibold">Generated YAML:</label>
+      <pre id="output" class="bg-gray-200 p-4 rounded whitespace-pre-wrap mt-2"></pre>
+    </div>
+  </div>
 
-        document.getElementById("output").textContent = yaml;
+  <script>
+    // Default config templates for apps
+    const defaultConfigs = {
+      nginx: `
+user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+
+events {
+  worker_connections 768;
+}
+
+http {
+  sendfile on;
+  tcp_nopush on;
+  types_hash_max_size 2048;
+
+  server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+    location / {
+      try_files $uri $uri/ =404;
+    }
+  }
+}
+`.trim(),
+
+      mysql: `
+[mysqld]
+user=mysql
+pid-file=/var/run/mysqld/mysqld.pid
+socket=/var/run/mysqld/mysqld.sock
+datadir=/var/lib/mysql
+log-error=/var/log/mysql/error.log
+`.trim(),
+
+      mariadb: `
+[mysqld]
+user=mariadb
+pid-file=/var/run/mariadb/mariadb.pid
+socket=/var/run/mariadb/mariadb.sock
+datadir=/var/lib/mariadb
+log-error=/var/log/mariadb/error.log
+`.trim(),
+
+      mongodb: `
+# mongod.conf
+
+storage:
+  dbPath: /var/lib/mongodb
+  journal:
+    enabled: true
+
+net:
+  bindIp: 127.0.0.1
+  port: 27017
+
+security:
+  authorization: enabled
+`.trim(),
+
+      nodejs: `
+# Example ecosystem.config.js for PM2
+module.exports = {
+  apps : [{
+    name: "app",
+    script: "./app.js",
+    instances: "max",
+    autorestart: true,
+    watch: false,
+    max_memory_restart: "1G"
+  }]
+};
+`.trim()
+    };
+
+    // Show/hide config editor and load template when checkbox toggled
+    document.getElementById("configCheckbox").addEventListener("change", function () {
+      const container = document.getElementById("configEditorContainer");
+      const editor = document.getElementById("configEditor");
+      const app = document.getElementById("app").value;
+
+      if (this.checked) {
+        container.classList.remove("hidden");
+        editor.value = defaultConfigs[app] || "# No template available for this app";
+      } else {
+        container.classList.add("hidden");
+        editor.value = "";
       }
+    });
 
-      function getInstallTask(os, app) {
-        if (["ubuntu", "amazon", "alpine"].includes(os)) {
-          return `  - name: Install ${app}\n    apt:\n      name: ${app}\n      state: present\n\n`;
-        } else if (os === "redhat") {
-          return `  - name: Install ${app}\n    yum:\n      name: ${app}\n      state: present\n\n`;
-        }
-        return "";
+    // Update config template when app changes and config checkbox is checked
+    document.getElementById("app").addEventListener("change", function () {
+      const configCheckbox = document.getElementById("configCheckbox");
+      const editor = document.getElementById("configEditor");
+      const app = this.value;
+
+      if (configCheckbox.checked) {
+        editor.value = defaultConfigs[app] || "# No template available for this app";
       }
+    });
 
-      function getRemoveTask(os, app) {
-        if (["ubuntu", "amazon", "alpine"].includes(os)) {
-          return `  - name: Remove ${app}\n    apt:\n      name: ${app}\n      state: absent\n      purge: yes\n\n`;
-        } else if (os === "redhat") {
-          return `  - name: Remove ${app}\n    yum:\n      name: ${app}\n      state: absent\n\n`;
-        }
-        return "";
-      }
+    function generateYAML() {
+      const os = document.getElementById("os").value;
+      const app = document.getElementById("app").value;
+      const actions = [...document.querySelectorAll(".action:checked")].map(el => el.value);
+      const features = [...document.querySelectorAll(".feature:checked")].map(el => el.value);
+      const configContent = document.getElementById("configEditor").value;
 
-      function getFeatureTask(app, feature) {
+      let yaml = `- name: Manage ${app} on ${os}\n  hosts: all\n  become: true\n  tasks:\n`;
+
+      if (actions.includes("sys-update")) {
+  yaml += getUpdateTask(os);
+}
+
+if (actions.includes("install")) {
+  yaml += getInstallTask(os, app);
+}
+
+if (actions.includes("remove")) {
+  yaml += getRemoveTask(os, app);
+}
+ if (actions.includes("reload")) {
+      yaml += getReloadTask(app);
+    }
+
+
+      features.forEach(feature => {
         if (feature === "config") {
-          return `  - name: Configure ${app}\n    template:\n      src: templates/${app}.j2\n      dest: /etc/${app}/${app}.conf\n\n`;
+          yaml += `  - name: Configure ${app}\n    copy:\n      content: |\n`;
+          // Indent config lines with 6 spaces (2 for YAML indent + 4 for content block)
+          const indentedConfig = configContent.split("\n").map(line => "      " + line).join("\n");
+          yaml += indentedConfig + "\n\n";
+          yaml += `    dest: /etc/${app}/${app}.conf\n    owner: root\n    group: root\n    mode: '0644'\n\n`;
+        } else {
+          yaml += getFeatureTask(app, feature);
         }
-        if (feature === "firewall") {
-          return `  - name: Allow HTTP traffic\n    ufw:\n      rule: allow\n      port: 80\n\n`;
-        }
-        if (feature === "ssl") {
-          return `  - name: Setup SSL for ${app}\n    copy:\n      src: files/ssl-cert.crt\n      dest: /etc/ssl/certs/${app}.crt\n\n`;
-        }
-        return "";
-      }
+      });
 
-      function downloadYAML() {
-        const yaml = document.getElementById("output").textContent;
-        const blob = new Blob([yaml], { type: "text/yaml" });
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(blob);
-        a.download = "playbook.yml";
-        a.click();
+      document.getElementById("output").textContent = yaml;
+    }
+
+    function getUpdateTask(os) {
+  if (["ubuntu", "debian"].includes(os)) {
+    return `  - name: Update apt cache\n    apt:\n      update_cache: yes\n\n`;
+  } else if (os === "redhat") {
+    return `  - name: Update DNF packages\n    dnf:\n      name: "*"\n      state: latest\n\n`;
+  } else if (os === "amazon") {
+    return `  - name: Update YUM packages\n    yum:\n      name: "*"\n      state: latest\n\n`;
+  } else if (os === "alpine") {
+    return `  - name: Update APK packages\n    apk:\n      update_cache: yes\n\n`;
+  }
+  return "";
+}
+
+
+    function getInstallTask(os, app) {
+  if (os === "ubuntu" || os === "debian") {
+    return `  - name: Install ${app}\n    apt:\n      name: ${app}\n      state: present\n      update_cache: yes\n\n`;
+  } else if (os === "redhat") {
+    return `  - name: Install ${app}\n    dnf:\n      name: ${app}\n      state: present\n\n`;
+  } else if (os === "amazon") {
+    return `  - name: Install ${app}\n    yum:\n      name: ${app}\n      state: present\n\n`;
+  } else if (os === "alpine") {
+    return `  - name: Install ${app}\n    apk:\n      name: ${app}\n      state: present\n\n`;
+  }
+  return "";
+}
+
+
+    function getRemoveTask(os, app) {
+  if (os === "ubuntu" || os === "debian") {
+    return `  - name: Remove ${app}\n    apt:\n      name: ${app}\n      state: absent\n      purge: yes\n\n`;
+  } else if (os === "redhat") {
+    return `  - name: Remove ${app}\n    dnf:\n      name: ${app}\n      state: absent\n\n`;
+  } else if (os === "amazon") {
+    return `  - name: Remove ${app}\n    yum:\n      name: ${app}\n      state: absent\n\n`;
+  } else if (os === "alpine") {
+    return `  - name: Remove ${app}\n    apk:\n      name: ${app}\n      state: absent\n\n`;
+  }
+  return "";
+}
+
+function getReloadTask(app) {
+    return `  - name: Reload ${app} service\n    service:\n      name: ${app}\n      state: reloaded\n\n`;
+  }
+    function getFeatureTask(app, feature) {
+      if (feature === "firewall") {
+        return `  - name: Allow HTTP traffic\n    ufw:\n      rule: allow\n      port: 80\n\n`;
       }
-    </script>
-  </body>
+      if (feature === "ssl") {
+        return `  - name: Setup SSL for ${app}\n    copy:\n      src: files/ssl-cert.crt\n      dest: /etc/ssl/certs/${app}.crt\n\n`;
+      }
+      return "";
+    }
+
+    function downloadYAML() {
+      const yaml = document.getElementById("output").textContent;
+      const blob = new Blob([yaml], { type: "text/yaml" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "playbook.yml";
+      a.click();
+    }
+  </script>
+</body>
 </html>
