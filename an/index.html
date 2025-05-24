@@ -1,43 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Ansible Playbook Generator</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>Ansible Playbook Generator</h1>
 
   <div class="section">
-  <label for="osSelect"><strong>Select Target OS:</strong></label>
-  <select id="osSelect">
-    <option value="ubuntu">Ubuntu</option>
-    <option value="amazon">Amazon Linux</option>
-    <option value="redhat">Red Hat</option>
+    <label for="osSelect"><strong>Select Target OS:</strong></label>
+    <select id="osSelect">
+      <option value="ubuntu">Ubuntu</option>
+      <option value="amazon">Amazon Linux</option>
+      <option value="redhat">Red Hat</option>
+    </select>
+  </div>
+
+ <div class="section">
+  <label for="appSelect"><strong>Select Application:</strong></label>
+  <select id="appSelect" onchange="toggleAppOptions()">
+    <option value="">-- Select --</option>
+    <option value="nginx">Nginx</option>
+    <option value="tomcat">Tomcat</option>
+    <option value="httpd">HTTPD</option>
   </select>
 </div>
 
 
-<div class="section">
-  <label><input type="checkbox" id="createUser"> Create user 'webadmin'</label><br>
-  <label><input type="checkbox" id="installNginx"> Install Nginx</label><br>
-  <label><input type="checkbox" id="startNginx"> Start and Enable Nginx</label><br>
-  <label><input type="checkbox" id="createWebDir"> Create web directory</label><br>
-  <label><input type="checkbox" id="copyIndex"> Copy index.html</label><br>
-</div>
+  <!-- Common User Option -->
+  <div class="section">
+    <label><input type="checkbox" id="createUser" /> Create user 'webadmin'</label>
+  </div>
 
+  <!-- Nginx Options -->
+  <div id="nginxOptions" class="app-options">
+    <label><input type="checkbox" id="installNginx" /> Install Nginx</label><br />
+    <label><input type="checkbox" id="startNginx" /> Start and Enable Nginx</label><br />
+    <label><input type="checkbox" id="createWebDir" /> Create web directory</label><br />
+    <label><input type="checkbox" id="copyIndex" /> Copy index.html</label>
+  </div>
 
+  <!-- Tomcat Options -->
+  <div id="tomcatOptions" class="app-options">
+    <label><input type="checkbox" id="installTomcat" /> Install Tomcat</label><br />
+    <label><input type="checkbox" id="configureTomcat" /> Configure Tomcat (template)</label>
+  </div>
 
-  <button onclick="generatePlaybook()">Generate Playbook</button>
+  <!-- HTTPD Options -->
+  <div id="httpdOptions" class="app-options">
+    <label><input type="checkbox" id="installHttpd" /> Install HTTPD</label><br />
+    <label><input type="checkbox" id="startHttpd" /> Start and Enable HTTPD</label>
+  </div>
 
- <div class="section">
-  <h3>
-    Generated Ansible Playbook (YAML):
-    <button onclick="copyToClipboard()" title="Copy YAML" class="copy-btn">📋</button>
-  </h3>
-  <textarea id="output" readonly></textarea>
-</div>
+  <div class="section">
+    <button onclick="generatePlaybook()">Generate Playbook</button>
+  </div>
 
+  <div class="section">
+    <h3>
+      Generated Ansible Playbook (YAML):
+      <button onclick="copyToClipboard()" title="Copy YAML" class="copy-btn">📋</button>
+    </h3>
+    <textarea id="output" readonly></textarea>
+  </div>
 
   <script src="script.js"></script>
 </body>
