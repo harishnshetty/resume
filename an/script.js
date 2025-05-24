@@ -28,7 +28,6 @@ function toggleAppOptions() {
   }
 }
 
-// Generate Ansible playbook based on selections
 function generatePlaybook() {
   const os = document.getElementById('osSelect').value;
   const app = document.getElementById('appSelect').value;
@@ -51,7 +50,7 @@ function generatePlaybook() {
     create_home: yes`);
   }
 
-  // Application-specific tasks
+  // nginx tasks
   if (app === 'nginx') {
     if (document.getElementById('installNginx')?.checked) {
       tasks.push(`- name: Ensure Nginx is installed
@@ -66,6 +65,19 @@ function generatePlaybook() {
     name: nginx
     state: started
     enabled: yes`);
+    }
+    if (document.getElementById('stopNginx')?.checked) {
+      tasks.push(`- name: Stop Nginx service
+  service:
+    name: nginx
+    state: stopped
+    enabled: no`);
+    }
+    if (document.getElementById('uninstallNginx')?.checked) {
+      tasks.push(`- name: Uninstall Nginx
+  ${pkgManager}:
+    name: nginx
+    state: absent`);
     }
     if (document.getElementById('createWebDir')?.checked) {
       tasks.push(`- name: Create web directory
@@ -87,12 +99,33 @@ function generatePlaybook() {
     }
   }
 
+  // tomcat tasks
   if (app === 'tomcat') {
     if (document.getElementById('installTomcat')?.checked) {
       tasks.push(`- name: Install Tomcat
   ${pkgManager}:
     name: tomcat9
     state: present`);
+    }
+    if (document.getElementById('startTomcat')?.checked) {
+      tasks.push(`- name: Start Tomcat service
+  service:
+    name: tomcat9
+    state: started
+    enabled: yes`);
+    }
+    if (document.getElementById('stopTomcat')?.checked) {
+      tasks.push(`- name: Stop Tomcat service
+  service:
+    name: tomcat9
+    state: stopped
+    enabled: no`);
+    }
+    if (document.getElementById('uninstallTomcat')?.checked) {
+      tasks.push(`- name: Uninstall Tomcat
+  ${pkgManager}:
+    name: tomcat9
+    state: absent`);
     }
     if (document.getElementById('configureTomcat')?.checked) {
       tasks.push(`- name: Configure Tomcat
@@ -102,6 +135,7 @@ function generatePlaybook() {
     }
   }
 
+  // httpd tasks
   if (app === 'httpd') {
     if (document.getElementById('installHttpd')?.checked) {
       tasks.push(`- name: Install HTTPD
@@ -116,6 +150,69 @@ function generatePlaybook() {
     state: started
     enabled: yes`);
     }
+    if (document.getElementById('stopHttpd')?.checked) {
+      tasks.push(`- name: Stop HTTPD service
+  service:
+    name: httpd
+    state: stopped
+    enabled: no`);
+    }
+    if (document.getElementById('uninstallHttpd')?.checked) {
+      tasks.push(`- name: Uninstall HTTPD
+  ${pkgManager}:
+    name: httpd
+    state: absent`);
+    }
+  }
+
+  // lamp tasks
+  if (app === 'lamp') {
+    if (document.getElementById('installLamp')?.checked) {
+      // Install apache2, mysql-server, php (package names for ubuntu; adapt for other OSes as needed)
+      tasks.push(`- name: Install Apache, MySQL and PHP
+  ${pkgManager}:
+    name:
+      - apache2
+      - mysql-server
+      - php
+    state: present
+    update_cache: yes`);
+    }
+    if (document.getElementById('startLamp')?.checked) {
+      tasks.push(`- name: Start Apache service
+  service:
+    name: apache2
+    state: started
+    enabled: yes
+
+- name: Start MySQL service
+  service:
+    name: mysql
+    state: started
+    enabled: yes`);
+    }
+    if (document.getElementById('stopLamp')?.checked) {
+      tasks.push(`- name: Stop Apache service
+  service:
+    name: apache2
+    state: stopped
+    enabled: no
+
+- name: Stop MySQL service
+  service:
+    name: mysql
+    state: stopped
+    enabled: no`);
+    }
+    if (document.getElementById('uninstallLamp')?.checked) {
+      tasks.push(`- name: Uninstall Apache, MySQL and PHP
+  ${pkgManager}:
+    name:
+      - apache2
+      - mysql-server
+      - php
+    state: absent`);
+    }
   }
 
   const playbook = `- name: Auto-generated playbook for ${os} - ${app}
@@ -125,6 +222,12 @@ function generatePlaybook() {
 ${tasks.join('\n\n')}`;
 
   document.getElementById('output').value = playbook;
+}
+
+document.getElementById('lampOptions').style.display = 'none';
+
+if (selectedApp === 'lamp') {
+  document.getElementById('lampOptions').style.display = 'block';
 }
 
 // Initialize app options visibility on load
