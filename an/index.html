@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ansible Playbook Generator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Ansible Playbook Generator</h1>
+
+  <div class="section">
+  <label for="osSelect"><strong>Select Target OS:</strong></label>
+  <select id="osSelect">
+    <option value="ubuntu">Ubuntu</option>
+    <option value="amazon">Amazon Linux</option>
+    <option value="redhat">Red Hat</option>
+  </select>
+</div>
+
+
+<div class="section">
+  <label><input type="checkbox" id="createUser"> Create user 'webadmin'</label><br>
+  <label><input type="checkbox" id="installNginx"> Install Nginx</label><br>
+  <label><input type="checkbox" id="startNginx"> Start and Enable Nginx</label><br>
+  <label><input type="checkbox" id="createWebDir"> Create web directory</label><br>
+  <label><input type="checkbox" id="copyIndex"> Copy index.html</label><br>
+</div>
+
+
+
+  <button onclick="generatePlaybook()">Generate Playbook</button>
+
+ <div class="section">
+  <h3>
+    Generated Ansible Playbook (YAML):
+    <button onclick="copyToClipboard()" title="Copy YAML" class="copy-btn">📋</button>
+  </h3>
+  <textarea id="output" readonly></textarea>
+</div>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
