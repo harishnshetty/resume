@@ -1,0 +1,9 @@
+- name: Manage httpd on amazon
+  hosts: all
+  become: true
+  tasks:
+  - name: Install httpd
+    yum:
+      name: httpd
+      state: present
+

@@ -178,6 +178,10 @@
       <button onclick="downloadYAML()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
         Download YAML
       </button>
+      <button onclick="clearYAML()" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+  Clear Output
+</button>
+
     </div>
 
     <div class="mt-6">
@@ -555,6 +559,12 @@ updateBox.classList.remove("hidden");
 }
 
 document.addEventListener("DOMContentLoaded", fetchLatestUpdate);
+function clearYAML() {
+  const output = document.getElementById("output");
+  if (output) {
+    output.textContent = "";
+  }
+}
 
   </script>
 </body>
