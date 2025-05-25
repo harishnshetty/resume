@@ -315,6 +315,7 @@ if (actions.includes("remove")) {
 
 
 
+
       features.forEach(feature => {
         if (feature === "config") {
           yaml += `  - name: Configure ${app}\n    copy:\n      content: |\n`;
@@ -402,6 +403,25 @@ function getReloadTask(app) {
   return "";
 }
 
+function getUserCreationTask(app) {
+  const users = {
+    nginx: { name: 'www-data', home: '/var/www', group: 'www-data' },
+    httpd: { name: 'apache', home: '/var/www', group: 'apache' },
+    apache2: { name: 'www-data', home: '/var/www', group: 'www-data' },
+    mysql: { name: 'mysql', home: '/var/lib/mysql', group: 'mysql' },
+    mariadb: { name: 'mariadb', home: '/var/lib/mariadb', group: 'mariadb' },
+    mongodb: { name: 'mongodb', home: '/var/lib/mongodb', group: 'mongodb' },
+    nodejs: { name: 'nodeapp', home: '/home/nodeapp', group: 'nodeapp' },
+    maven: { name: 'developer', home: '/home/developer', group: 'developer' },
+    openjdk11: { name: 'developer', home: '/home/developer', group: 'developer' },
+    openjdk17: { name: 'developer', home: '/home/developer', group: 'developer' },
+    openjdk21: { name: 'developer', home: '/home/developer', group: 'developer' }
+  };
+
+  const u = users[app] || { name: 'webadmin', home: '/home/webadmin', group: 'webadmin' };
+
+  return `  - name: Create ${u.name} user\n    user:\n      name: ${u.name}\n      group: ${u.group}\n      home: ${u.home}\n      state: present\n      create_home: yes\n\n`;
+}
 
      document.addEventListener("DOMContentLoaded", function () {
     const firewallCheckbox = document.querySelector('input[type="checkbox"][value="enableFirewall"]');

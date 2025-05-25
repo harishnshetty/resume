@@ -236,8 +236,7 @@ if (document.getElementById('createUser')?.checked) {
     state: absent`);
     }
   }
-
-  function getUserCreationTask(app) {
+function getUserCreationTask(app) {
   const users = {
     nginx: { name: 'www-data', home: '/var/www', group: 'www-data' },
     httpd: { name: 'apache', home: '/var/www', group: 'apache' },
@@ -254,8 +253,9 @@ if (document.getElementById('createUser')?.checked) {
 
   const u = users[app] || { name: 'webadmin', home: '/home/webadmin', group: 'webadmin' };
 
-  return `- name: Create ${u.name} user\n  user:\n    name: ${u.name}\n    group: ${u.group}\n    home: ${u.home}\n    state: present\n    create_home: yes\n`;
+  return `  - name: Create ${u.name} user\n    user:\n      name: ${u.name}\n      group: ${u.group}\n      home: ${u.home}\n      state: present\n      create_home: yes\n\n`;
 }
+
 
   // Compose final playbook YAML
   const playbook = `- name: Auto-generated playbook for ${os} - ${app}
