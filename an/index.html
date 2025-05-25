@@ -65,6 +65,8 @@
       </label>
       <label class="inline-flex items-center mr-4">
         <input type="checkbox" id="copyContentCheckbox" value="cp-content" class="feature mr-2" /> Copy Content
+        <input type="text" id="copyContentPath" placeholder="Enter destination path (e.g. /var/www/html/index.html)" class="mt-2 p-2 border rounded w-full hidden" />
+
       </label>
       <label class="inline-flex items-center mr-4">
         <input type="checkbox" value="ssl" class="feature mr-2" /> SSL
@@ -323,9 +325,13 @@ if (actions.includes("remove")) {
           const indentedConfig = configContent.split("\n").map(line => "      " + line).join("\n");
           yaml += indentedConfig + "\n\n";
           yaml += `    dest: /etc/${app}/${app}.conf\n    owner: root\n    group: root\n    mode: '0644'\n\n`;
-        } else {
-          yaml += getFeatureTask(app, feature);
-        }
+        } else if (feature === "cp-content") {
+  const path = document.getElementById("copyContentPath").value.trim() || `/var/www/html/index.html`;
+  yaml += `  - name: Copy index.html to ${path}\n    copy:\n      src: files/index.html\n      dest: ${path}\n      owner: root\n      group: root\n      mode: '0644'\n\n`;
+} else {
+  yaml += getFeatureTask(app, feature);
+}
+
       });
 
       document.getElementById("output").textContent = yaml;
@@ -437,6 +443,18 @@ function getUserCreationTask(app) {
       });
     }
   });
+
+  document.addEventListener("DOMContentLoaded", function () {
+  const copyCheckbox = document.getElementById("copyContentCheckbox");
+  const copyPathInput = document.getElementById("copyContentPath");
+
+  if (copyCheckbox && copyPathInput) {
+    copyCheckbox.addEventListener("change", function () {
+      copyPathInput.classList.toggle("hidden", !this.checked);
+    });
+  }
+});
+
 
     function downloadYAML() {
       const yaml = document.getElementById("output").textContent;
