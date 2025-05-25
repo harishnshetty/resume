@@ -49,9 +49,15 @@
 
 <div class="flex-0 p-1 overflow-y-auto lg:ml-80"></div>
   <div class="max-w-4xl w-full bg-white rounded-xl shadow-md p-6">
-    <div id="latestUpdate" class="mb-4 text-sm text-center text-blue-800 bg-blue-100 p-2 rounded hidden">
-  ⏳ Fetching latest update...
+
+<div id="latestUpdate" class="mb-4 w-full max-w-full text-sm text-blue-800 bg-blue-100 p-3 rounded hidden">
+  <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 w-full">
+    <img src="7.gif" alt="update" class="w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0" />
+    <span id="updateMessage" class="text-sm sm:text-base font-medium break-words whitespace-pre-wrap w-full">Fetching update...</span>
+  </div>
 </div>
+
+
 
     <h1 class="text-2xl font-bold mb-6 text-center"> [ Ansible YAML Generator ]  </h1>
 <span class="space-x-4">
@@ -537,8 +543,10 @@ async function fetchLatestUpdate() {
 
     const [_, message] = values[values.length - 1]; // Get last row
     const updateBox = document.getElementById("latestUpdate");
-updateBox.innerHTML = `<img src="7.gif" alt="update" class="inline w-10 h-10 mr-1 align-middle"> <span> Latest Updates:- ${message}</span>`;
-    updateBox.classList.remove("hidden");
+const updateMsg = document.getElementById("updateMessage");
+updateMsg.textContent = `Latest Updates: ${message}`;
+updateBox.classList.remove("hidden");
+
   } catch (err) {
     console.error("Failed to fetch update:", err);
   }
