@@ -44,7 +44,7 @@
 
 
             <img src="qr1.png" alt="Harish N Shetty" class="w-45 h-45  mx-auto mb-4">
-
+<br> Desgin & Developed By</br><strong>Harish N Shetty</strong> 
     </div>
   </div>
 
@@ -542,10 +542,11 @@ async function fetchLatestUpdate() {
     const values = data.values;
     if (!values || values.length < 2) return;
 
-    const [_, message] = values[values.length - 1]; // Get last row
-    const updateBox = document.getElementById("latestUpdate");
+    const [timestamp, message] = values[values.length - 1]; // Get last row
+const updateBox = document.getElementById("latestUpdate");
 const updateMsg = document.getElementById("updateMessage");
-updateMsg.textContent = `Latest Updates: ${message}`;
+updateMsg.textContent = `🕒 ${timestamp} — Latest Update: ${message}`;
+
 updateBox.classList.remove("hidden");
 
   } catch (err) {
