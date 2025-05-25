@@ -6,7 +6,7 @@ function copyToClipboard() {
     return;
   }
   output.select();
-  output.setSelectionRange(0, 99999); // For mobile devices
+  output.setSelectionRange(0, 99999);
 
   navigator.clipboard.writeText(output.value).then(() => {
     alert('Playbook copied to clipboard!');
@@ -46,8 +46,12 @@ function toggleAppOptions() {
 
 // Generate playbook YAML based on selected options
 function generatePlaybook() {
-  const osSelect = document.getElementById('osSelect');
-  const appSelect = document.getElementById('appSelect');
+- const osSelect = document.getElementById('osSelect');
+- const appSelect = document.getElementById('appSelect');
++ const osSelect = document.getElementById('os');
++ const appSelect = document.getElementById('app');
+
+  
   if (!osSelect || !appSelect) {
     alert('OS or Application select not found!');
     return;
