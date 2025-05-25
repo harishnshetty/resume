@@ -67,14 +67,10 @@ function generatePlaybook() {
   tasks.push(`# Target OS: ${os}`);
   tasks.push(`# Selected Application: ${app}`);
 
-  // User creation task (if checked)
-  if (document.getElementById('createUser')?.checked) {
-    tasks.push(`- name: Create webadmin user
-  user:
-    name: webadmin
-    state: present
-    create_home: yes`);
-  }
+if (document.getElementById('createUser')?.checked) {
+  tasks.push(getUserCreationTask(app));
+}
+
 
   // App-specific tasks
   if (app === 'nginx') {
@@ -237,6 +233,26 @@ function generatePlaybook() {
     }
   }
 
+  function getUserCreationTask(app) {
+  const users = {
+    nginx: { name: 'www-data', home: '/var/www', group: 'www-data' },
+    httpd: { name: 'apache', home: '/var/www', group: 'apache' },
+    apache2: { name: 'www-data', home: '/var/www', group: 'www-data' },
+    mysql: { name: 'mysql', home: '/var/lib/mysql', group: 'mysql' },
+    mariadb: { name: 'mariadb', home: '/var/lib/mariadb', group: 'mariadb' },
+    mongodb: { name: 'mongodb', home: '/var/lib/mongodb', group: 'mongodb' },
+    nodejs: { name: 'nodeapp', home: '/home/nodeapp', group: 'nodeapp' },
+    maven: { name: 'developer', home: '/home/developer', group: 'developer' },
+    openjdk11: { name: 'developer', home: '/home/developer', group: 'developer' },
+    openjdk17: { name: 'developer', home: '/home/developer', group: 'developer' },
+    openjdk21: { name: 'developer', home: '/home/developer', group: 'developer' }
+  };
+
+  const u = users[app] || { name: 'webadmin', home: '/home/webadmin', group: 'webadmin' };
+
+  return `- name: Create ${u.name} user\n  user:\n    name: ${u.name}\n    group: ${u.group}\n    home: ${u.home}\n    state: present\n    create_home: yes\n`;
+}
+
   // Compose final playbook YAML
   const playbook = `- name: Auto-generated playbook for ${os} - ${app}
   hosts: localhost
@@ -271,3 +287,5 @@ window.onload = () => {
     copyBtn.addEventListener('click', copyToClipboard);
   }
 };
+
+

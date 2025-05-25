@@ -61,7 +61,7 @@
         <input type="checkbox" id="configCheckbox" value="config" class="feature mr-2" /> Config
       </label>
       <label class="inline-flex items-center mr-4">
-        <input type="checkbox" id="configCheckbox" value="user" class="feature mr-2" /> User Create
+        <input type="checkbox" id="createUser" value="user" class="feature mr-2" /> User Create
       </label>
       <label class="inline-flex items-center mr-4">
         <input type="checkbox" id="configCheckbox" value="cp-content" class="feature mr-2" /> Copy Content
@@ -178,8 +178,65 @@ module.exports = {
     max_memory_restart: "1G"
   }]
 };
-`.trim()
-    };
+`.trim(),
+httpd: `
+ServerRoot "/etc/httpd"
+Listen 80
+
+Include conf.modules.d/*.conf
+User apache
+Group apache
+
+DocumentRoot "/var/www/html"
+<Directory "/var/www">
+    AllowOverride None
+    Require all granted
+</Directory>
+`.trim(),
+
+  apache2: `
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/html
+
+    ErrorLog \${APACHE_LOG_DIR}/error.log
+    CustomLog \${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+`.trim(),
+
+  maven: `
+<settings>
+  <localRepository>/path/to/local/repo</localRepository>
+  <interactiveMode>true</interactiveMode>
+</settings>
+`.trim(),
+
+  openjdk11: `
+# Java 11 environment configuration
+JAVA_HOME=/usr/lib/jvm/java-11-openjdk
+PATH=$JAVA_HOME/bin:$PATH
+export JAVA_HOME
+export PATH
+`.trim(),
+
+  openjdk17: `
+# Java 17 environment configuration
+JAVA_HOME=/usr/lib/jvm/java-17-openjdk
+PATH=$JAVA_HOME/bin:$PATH
+export JAVA_HOME
+export PATH
+`.trim(),
+
+  openjdk21: `
+# Java 21 environment configuration
+JAVA_HOME=/usr/lib/jvm/java-21-openjdk
+PATH=$JAVA_HOME/bin:$PATH
+export JAVA_HOME
+export PATH
+`.trim(),
+};
+
+    
 
     // Show/hide config editor and load template when checkbox toggled
     document.getElementById("configCheckbox").addEventListener("change", function () {
@@ -230,6 +287,10 @@ if (actions.includes("remove")) {
  if (actions.includes("reload")) {
       yaml += getReloadTask(app);
     }
+   if (features.includes("user")) {
+  yaml += getUserCreationTask(app);
+}
+
 
 
       features.forEach(feature => {
