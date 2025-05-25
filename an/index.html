@@ -49,10 +49,14 @@
 
 <div class="flex-0 p-1 overflow-y-auto lg:ml-80"></div>
   <div class="max-w-4xl w-full bg-white rounded-xl shadow-md p-6">
+    <div id="latestUpdate" class="mb-4 text-sm text-center text-blue-800 bg-blue-100 p-2 rounded hidden">
+  ⏳ Fetching latest update...
+</div>
+
     <h1 class="text-2xl font-bold mb-6 text-center"> [ Ansible YAML Generator ]  </h1>
 <span class="space-x-4">
-  <a href="ansible.pdf" class="text-blue-600 underline" target="_blank">Ansible-PDF</a>▶𝚈𝚘𝚞𝚝𝚞𝚋𝚎
-  <a href="https://www.youtube.com/playlist?list=PLB1yU-G7FE-ENj8uOF2wuiU_AWdvZAI7H" class="text-blue-600 underline" target="_blank">Youtube-Playlist</a>
+  <a href="ansible.pdf" class="text-blue-600 underline" target="_blank">Ansible-PDF</a>
+  <a href="https://www.youtube.com/playlist?list=PLB1yU-G7FE-ENj8uOF2wuiU_AWdvZAI7H" class="text-blue-600 underline" target="_blank">▶️ YouTube-Playlist</a>
   <a href="https://docs.google.com/forms/d/e/1FAIpQLSe_tqab3RWclUkxWWtBKdqYp0wjoGlCawZIYDT1itX-xAnY2g/viewform?usp=dialog" class="text-blue-600 underline" target="_blank">✍️ Feedback-Form</a>
   <a href="https://harishnshetty.github.io/feedback/ansible.html" class="text-blue-600 underline" target="_blank">🤝😊 Read-Feedback-Messages</a>
 </span>
@@ -518,6 +522,30 @@ function getUserCreationTask(app) {
       a.download = "playbook.yml";
       a.click();
     }
+    const apiKey = "AIzaSyCepK4W-S9qKxy4yas67_1EQ-Y7X2-Wezk";
+const sheetId = "19doHRzj0QWFPrf3-swIN5OO7EdISU8x8Ws4ed8j20Rs";
+const sheetName = "sheet2";
+
+async function fetchLatestUpdate() {
+  try {
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
+    const res = await fetch(url);
+    const data = await res.json();
+
+    const values = data.values;
+    if (!values || values.length < 2) return;
+
+    const [_, message] = values[values.length - 1]; // Get last row
+    const updateBox = document.getElementById("latestUpdate");
+updateBox.innerHTML = `<img src="7.gif" alt="update" class="inline w-10 h-10 mr-1 align-middle"> <span> Latest Updates:- ${message}</span>`;
+    updateBox.classList.remove("hidden");
+  } catch (err) {
+    console.error("Failed to fetch update:", err);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", fetchLatestUpdate);
+
   </script>
 </body>
 </html>
