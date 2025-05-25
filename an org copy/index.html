@@ -7,43 +7,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 text-gray-900 min-h-screen flex items-center justify-center p-6">
-
-   <!-- LEFT: Fixed Profile Card -->
-  <div class="w-full lg:w-80 bg-gray-50 p-6 shadow-inner lg:shadow-none lg:fixed lg:left-0 lg:top-0 lg:h-screen overflow-y-auto z-10">
-    <div class="text-center">
-      <img src="image.png" alt="Harish N Shetty" class="w-32 h-32 rounded-full mx-auto mb-4">
-      <h2 class="text-xl font-bold">Harish N Shetty</h2>
-      <p class="text-sm text-gray-600 mb-2">harishnshetty • he/him</p>
-      <p class="text-sm mb-4">DevOps Learner || Open Source Enthusiast || Keep learning, sharing and growing</p>
-
-      <ul class="text-left text-sm space-y-2">
-        <li><strong>Status:</strong> <span class="text-green-600">open to work</span></li>
-        <li><strong>Location:</strong> Bengaluru, Karnataka, India</li>
-        <li><strong>Email:</strong> <a href="mailto:harishn662@gmail.com" class="text-blue-600 underline">harishn662@gmail.com</a></li>
-        <li><strong>Website:</strong> <a href="https://harishnshetty.github.io/resume/" class="text-blue-600 underline" target="_blank">Website</a></li>
-        <li><strong>Website:</strong> <a href="https://www.linkedin.com/in/harishnshetty" class="text-blue-600 underline" target="_blank">Website</a></li>
-        <li><strong>GitHub:</strong> <a href="https://github.com/harishnshetty?tab=repositories" class="text-blue-600 underline">@harishnshetty</a></li>
-        <li><strong>Youtube:</strong> <a href="https://www.youtube.com/@HarishNShetty0107" class="text-blue-600 underline">@HarishNShetty0107</a></li>
-      </ul>
-
-      <p class="text-xs mt-4 text-gray-500">Last update: 25/may/2025</p>
-       <p class="text-xl mt-4 text-gray-500">It's a open-source geneator tool you can contribute to support my work and feature improvements harishn662@ybl</p>
-            <img src="qr1.png" alt="Harish N Shetty" class="w-45 h-45  mx-auto mb-4">
-
-    </div>
-  </div>
-
-<div class="flex-0 p-1 overflow-y-auto lg:ml-80"></div>
   <div class="max-w-4xl w-full bg-white rounded-xl shadow-md p-6">
     <h1 class="text-2xl font-bold mb-6 text-center">Ansible YAML Generator</h1>
 
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6"></div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      
-
-
-
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
         <label for="os" class="font-semibold">Select OS:</label>
         <select id="os" class="w-full mt-1 p-2 border rounded">
@@ -126,8 +93,9 @@
           <label><input type="checkbox" value="8080" class="fw-port mr-1"> Tomcat (8080)</label>
           <label><input type="checkbox" value="22" class="fw-port mr-1"> SSH (22)</label>
         </div>
-      
-</div>
+      </div>
+    </div>
+    
 
     <!-- Config Editor textarea -->
     <div id="configEditorContainer" class="mt-4 hidden">
@@ -153,8 +121,7 @@
       <pre id="output" class="bg-gray-200 p-4 rounded whitespace-pre-wrap mt-2"></pre>
     </div>
   </div>
- 
-  </div>
+</div>
 
   <script>
     // Default config templates for apps
