@@ -53,8 +53,14 @@
 
 <div id="latestUpdate" class="mb-4 w-full max-w-full text-sm text-blue-800 bg-blue-100 p-3 rounded hidden">
   <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 w-full">
-    <img src="7.gif" alt="update" class="w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0" />
-    <span id="updateMessage" class="text-sm sm:text-base font-medium break-words whitespace-pre-wrap w-full">Fetching update...</span>
+    <img src="7.gif" alt="update" class="w-10 h-10 sm:w-7 sm:h-7 flex-shrink-0" />
+<span id="updateMessage" class="text-sm sm:text-base font-medium break-words whitespace-pre-wrap w-full">
+  <svg class="animate-spin inline-block w-5 h-5 text-blue-600 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+  </svg>
+  Fetching update...
+</span>
   </div>
 </div>
 
@@ -128,11 +134,30 @@
       <label class="inline-flex items-center mr-4">
         <input type="checkbox" id="createUser" value="user" class="feature mr-2" /> User Create
       </label>
-      <label class="inline-flex items-center mr-4">
-        <input type="checkbox" id="copyContentCheckbox" value="cp-content" class="feature mr-2" /> Copy Content
-        <input type="text" id="copyContentPath" placeholder="Enter destination path (e.g. /var/www/html/index.html)" class="mt-2 p-2 border rounded w-full hidden" />
 
-      </label>
+
+     <div class="flex flex-col gap-1 mb-2">
+  <label class="inline-flex items-center">
+    <input type="checkbox" id="copyContentCheckbox" value="cp-content" class="feature mr-2" />
+    <span>Copy Content</span>
+  </label>
+
+  <select id="copyContentPathSelect" class="p-2 border rounded hidden w-full">
+    <input
+  type="text"
+  id="customCopyPath"
+  class="p-2 border rounded w-full mt-2 hidden"
+  placeholder="Enter custom destination path (e.g. /opt/myapp/index.html)"
+/>
+
+    <!-- Options will be added dynamically -->
+  </select>
+  
+</div>
+
+
+
+
       <label class="inline-flex items-center mr-4">
         <input type="checkbox" value="ssl" class="feature mr-2" /> SSL
       </label>
@@ -175,6 +200,10 @@
       <button onclick="generateYAML()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
         Generate YAML
       </button>
+      <button onclick="copyYAML()" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">
+  Copy YAML
+</button>
+
       <button onclick="downloadYAML()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
         Download YAML
       </button>
@@ -395,7 +424,11 @@ if (actions.includes("remove")) {
           yaml += indentedConfig + "\n\n";
           yaml += `    dest: /etc/${app}/${app}.conf\n    owner: root\n    group: root\n    mode: '0644'\n\n`;
         } else if (feature === "cp-content") {
-  const path = document.getElementById("copyContentPath").value.trim() || `/var/www/html/index.html`;
+let path = document.getElementById("copyContentPathSelect")?.value;
+if (path === "custom") {
+  const customPath = document.getElementById("customCopyPath")?.value.trim();
+  path = customPath || "/var/www/html/index.html"; // fallback if empty
+}
   yaml += `  - name: Copy index.html to ${path}\n    copy:\n      src: files/index.html\n      dest: ${path}\n      owner: root\n      group: root\n      mode: '0644'\n\n`;
 } else {
   yaml += getFeatureTask(app, feature);
@@ -515,41 +548,100 @@ function getUserCreationTask(app) {
 
   document.addEventListener("DOMContentLoaded", function () {
   const copyCheckbox = document.getElementById("copyContentCheckbox");
-  const copyPathInput = document.getElementById("copyContentPath");
+  
+});
 
-  if (copyCheckbox && copyPathInput) {
-    copyCheckbox.addEventListener("change", function () {
-      copyPathInput.classList.toggle("hidden", !this.checked);
-    });
+const appToPaths = {
+  nginx: ["/var/www/html/index.html", "/etc/nginx/sites-available/default"],
+  httpd: ["/var/www/html/index.html", "/etc/httpd/conf/httpd.conf"],
+  apache2: ["/var/www/html/index.html", "/etc/apache2/sites-available/000-default.conf"],
+  mariadb: ["/etc/mysql/my.cnf", "/etc/mariadb/mariadb.conf.d/"],
+  maven: ["/etc/maven/settings.xml", "/home/user/.m2/settings.xml"],
+  openjdk11: ["/etc/environment", "/usr/lib/jvm/java-11-openjdk"],
+  openjdk17: ["/etc/environment", "/usr/lib/jvm/java-17-openjdk"],
+  openjdk21: ["/etc/environment", "/usr/lib/jvm/java-21-openjdk"],
+  mongodb: ["/etc/mongod.conf", "/var/lib/mongodb/index.html"]
+};
+
+function updateCopyPathDropdown(app) {
+  const select = document.getElementById("copyContentPathSelect");
+  const customInput = document.getElementById("customCopyPath");
+  select.innerHTML = "";
+  customInput.classList.add("hidden");
+
+  const paths = appToPaths[app] || ["/var/www/html/index.html"];
+  paths.forEach(path => {
+    const option = document.createElement("option");
+    option.value = path;
+    option.textContent = path;
+    select.appendChild(option);
+  });
+
+  // Add "custom" option
+  const customOption = document.createElement("option");
+  customOption.value = "custom";
+  customOption.textContent = "🔧 Enter custom path";
+  select.appendChild(customOption);
+}
+
+
+// Show/hide and update on checkbox + app change
+document.getElementById("copyContentCheckbox").addEventListener("change", function () {
+  const select = document.getElementById("copyContentPathSelect");
+  select.classList.toggle("hidden", !this.checked);
+  if (this.checked) updateCopyPathDropdown(document.getElementById("app").value);
+});
+
+document.getElementById("app").addEventListener("change", function () {
+  const checkbox = document.getElementById("copyContentCheckbox");
+  if (checkbox.checked) updateCopyPathDropdown(this.value);
+});
+
+document.getElementById("copyContentPathSelect").addEventListener("change", function () {
+  const customInput = document.getElementById("customCopyPath");
+  if (this.value === "custom") {
+    customInput.classList.remove("hidden");
+  } else {
+    customInput.classList.add("hidden");
   }
 });
 
+   function downloadYAML() {
+  const yaml = document.getElementById("output").textContent;
+  const blob = new Blob([yaml], { type: "text/yaml" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "playbook.yml";
+  a.click();
 
-    function downloadYAML() {
-      const yaml = document.getElementById("output").textContent;
-      const blob = new Blob([yaml], { type: "text/yaml" });
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = "playbook.yml";
-      a.click();
-    }
-    const apiKey = "AIzaSyCepK4W-S9qKxy4yas67_1EQ-Y7X2-Wezk";
-const sheetId = "19doHRzj0QWFPrf3-swIN5OO7EdISU8x8Ws4ed8j20Rs";
-const sheetName = "sheet2";
+  alert("Download started!");
+}
+
+
 
 async function fetchLatestUpdate() {
   try {
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
-    const res = await fetch(url);
+const url = "https://script.google.com/macros/s/AKfycbxZVmJjswUOGZLNm2zR9afxjzUeSHccbW_pSXwmeaPMFVa-oJSteKwJNFWS423h5FSj/exec"; // Your web app URL    const res = await fetch(url);
     const data = await res.json();
 
-    const values = data.values;
+    const values = data;
+document.addEventListener("DOMContentLoaded", () => {
+  fetchLatestUpdate();
+  setInterval(fetchLatestUpdate, 5 * 60 * 1000); // Refresh every 5 minutes
+});
+
     if (!values || values.length < 2) return;
 
     const [timestamp, message] = values[values.length - 1]; // Get last row
 const updateBox = document.getElementById("latestUpdate");
 const updateMsg = document.getElementById("updateMessage");
-updateMsg.textContent = `🕒 ${timestamp} — Latest Update: ${message}`;
+const dateObj = new Date(timestamp);
+const formatted = dateObj.toLocaleString("en-IN", {
+  dateStyle: "medium",
+  timeStyle: "short"
+});
+updateMsg.innerHTML = `🕒 ${formatted} — Latest Update: ${message}`;
+
 
 updateBox.classList.remove("hidden");
 
@@ -557,6 +649,51 @@ updateBox.classList.remove("hidden");
     console.error("Failed to fetch update:", err);
   }
 }
+
+function copyYAML() {
+  const output = document.getElementById("output");
+  if (output?.textContent) {
+    navigator.clipboard.writeText(output.textContent).then(() => {
+     showToast("✅ YAML copied!");
+
+    });
+  }
+}
+
+function showToast(message) {
+  const toast = document.createElement("div");
+  toast.textContent = message;
+  toast.className = "fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded shadow-md z-50";
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+async function fetchLatestUpdate() {
+  try {
+    const url = "https://script.google.com/macros/s/AKfycbxZVmJjswUOGZLNm2zR9afxjzUeSHccbW_pSXwmeaPMFVa-oJSteKwJNFWS423h5FSj/exec";
+    const res = await fetch(url);
+    const data = await res.json();
+
+    if (!Array.isArray(data) || data.length < 2) return;
+
+    const [timestamp, message] = data[data.length - 1]; // Last row
+    const updateBox = document.getElementById("latestUpdate");
+    const updateMsg = document.getElementById("updateMessage");
+
+    const dateObj = new Date(timestamp);
+    const formatted = dateObj.toLocaleString("en-IN", {
+      dateStyle: "medium",
+      timeStyle: "short"
+    });
+
+    updateMsg.textContent = `🕒 ${formatted} — Latest Update: ${message}`;
+    updateBox.classList.remove("hidden");
+
+  } catch (err) {
+    console.error("Failed to fetch update:", err);
+  }
+}
+
 
 document.addEventListener("DOMContentLoaded", fetchLatestUpdate);
 function clearYAML() {

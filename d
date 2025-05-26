@@ -1,0 +1,9 @@
+            Nginx
+         httpd
+         apache2
+         mariadb
+         maven
+         openjdk11
+         openjdk17
+         openjdk21
+         mongodb
