@@ -7,17 +7,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-      body {
-        background: linear-gradient(-45deg, #667eea, #cab6b6, #365fcd, #667eea);
-        background-size: 400% 400%;
-        animation: gradientShift 10s ease infinite;
-      }
+     body {
+  background-color: #111827; /* Tailwind's dark gray */
+}
+
+
   
-      @keyframes gradientShift {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-      }
+      
   
       .gradient-text {
         background: linear-gradient(90deg, #7f5af0, #e2cccc, #1e8a85);
@@ -173,79 +169,94 @@
       </nav>
     </header>
 
-   <section class="px-6 py-10 max-w-5xl mx-auto text-left text-gray-800 dark:text-gray-200">
-  <!-- Profile Intro -->
-  <div class="flex flex-col sm:flex-row items-center gap-6 mb-10">
-    <img src="image.png" alt="Harish N Shetty" class="w-32 h-32 sm:w-40 sm:h-40 rounded-full shadow-lg object-cover">
+    
+
+  <section class="px-6 py-10 max-w-5xl mx-auto text-left text-gray-800 dark:text-gray-100">
+  <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+
+    <!-- Profile Intro -->
+    <div class="flex flex-col sm:flex-row items-center gap-6 mb-10">
+      <img src="image.png" alt="Harish N Shetty" class="w-32 h-32 sm:w-40 sm:h-40 rounded-full shadow-lg object-cover">
+      <div>
+        <h2 class="text-3xl font-bold gradient-text mb-2">Harish N. Shetty</h2>
+        <p class="text-lg leading-relaxed">
+          Passionate about <strong>Cloud & DevOps</strong>, I specialize in automating infrastructure, optimizing CI/CD, and architecting scalable AWS deployments. Based in <strong>Bengaluru, India</strong>, I also share tech knowledge on <a href="https://www.youtube.com/@HarishNShetty0107" class="underline text-red-500" target="_blank">YouTube</a>.
+        </p>
+      </div>
+    </div>
+
+   <!-- Contact Info -->
+<div class="bg-gray-100 dark:bg-gray-800 p-4 rounded shadow mb-10">
+  <pre class="whitespace-pre-wrap text-base font-mono text-gray-800 dark:text-gray-100">
+<strong>Status:</strong>     <span class="text-green-600">Open to work</span>
+<strong>Location:</strong>   Bengaluru, Karnataka, India
+<strong>Email:</strong>      <a href="mailto:harishn662@gmail.com" class="text-blue-600 underline">harishn662@gmail.com</a>
+<strong>Website:</strong>    <a href="https://harishnshetty.github.io/resume/" class="text-blue-600 underline" target="_blank">Website</a>
+<strong>LinkedIn:</strong>   <a href="https://in.linkedin.com/in/harishnshetty?trk=profile-badge" class="text-blue-600 underline" target="_blank">harishnshetty</a>
+<strong>GitHub:</strong>     <a href="https://github.com/harishnshetty" class="text-blue-600 underline" target="_blank">@harishnshetty</a>
+<strong>YouTube:</strong>    <a href="https://www.youtube.com/@HarishNShetty0107" class="text-blue-600 underline" target="_blank">@HarishNShetty0107</a>
+  </pre>
+</div>
+
+
+    <!-- Timeline -->
+    <div class="mb-10">
+     <h3 class="text-3xl sm:text-4xl font-extrabold mb-6 text-gray-800 dark:text-gray-100 border-b-4 border-purple-500 pb-2">
+  🚀 My Journey
+</h3>
+
+      <div class="space-y-4 border-l-2 border-purple-500 pl-6">
+        <div>
+          <h4 class="text-lg font-semibold">2024 – Present: DevOps Projects</h4>
+          <p class="text-sm">Building cloud infrastructure using Terraform, automating with Ansible, and deploying via Jenkins.</p>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold">2022 – 2023: AWS Certified Learning</h4>
+          <p class="text-sm">Completed AWS certifications and began hands-on deployments using EC2, S3, IAM, VPC.</p>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold">2020 – 2022: Engineering Graduation</h4>
+          <p class="text-sm">Completed degree with focus on computer science and foundational software skills.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills -->
     <div>
-      <h2 class="text-3xl font-bold gradient-text mb-2">Harish N. Shetty</h2>
-      <p class="text-lg leading-relaxed">
-        Passionate about <strong>Cloud & DevOps</strong>, I specialize in automating infrastructure, optimizing CI/CD, and architecting scalable AWS deployments. Based in <strong>Bengaluru, India</strong>, I also share tech knowledge on <a href="https://www.youtube.com/@HarishNShetty0107" class="underline text-red-500" target="_blank">YouTube</a>.
-      </p>
-    </div>
-  </div>
+     <h3 class="text-3xl sm:text-4xl font-extrabold mb-6 text-gray-800 dark:text-gray-100 border-b-4 border-indigo-500 pb-2">
+  🛠️ Skills
+</h3>
 
-  <!-- Contact Info -->
-  <ul class="list-disc pl-6 space-y-2 text-base mb-10">
-    <li><strong>Status:</strong> <span class="text-green-600">Open to work</span></li>
-    <li><strong>Location:</strong> Bengaluru, Karnataka, India</li>
-    <li><strong>Email:</strong> <a href="mailto:harishn662@gmail.com" class="text-blue-600 underline">harishn662@gmail.com</a></li>
-    <li><strong>Website:</strong> <a href="https://harishnshetty.github.io/resume/" class="text-blue-600 underline" target="_blank">harishnshetty.github.io/resume</a></li>
-    <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/harishnshetty" class="text-blue-600 underline" target="_blank">linkedin.com/in/harishnshetty</a></li>
-    <li><strong>GitHub:</strong> <a href="https://github.com/harishnshetty" class="text-blue-600 underline" target="_blank">@harishnshetty</a></li>
-    <li><strong>YouTube:</strong> <a href="https://www.youtube.com/@HarishNShetty0107" class="text-blue-600 underline" target="_blank">@HarishNShetty0107</a></li>
-  </ul>
-
-  <!-- Timeline -->
-  <div class="mb-10">
-    <h3 class="text-2xl font-bold mb-4 gradient-text">Journey</h3>
-    <div class="space-y-4 border-l-2 border-purple-500 pl-6">
-      <div>
-        <h4 class="text-lg font-semibold">2024 – Present: DevOps Projects</h4>
-        <p class="text-sm">Building cloud infrastructure using Terraform, automating with Ansible, and deploying via Jenkins.</p>
-      </div>
-      <div>
-        <h4 class="text-lg font-semibold">2022 – 2023: AWS Certified Learning</h4>
-        <p class="text-sm">Completed AWS certifications and began hands-on deployments using EC2, S3, IAM, VPC.</p>
-      </div>
-      <div>
-        <h4 class="text-lg font-semibold">2020 – 2022: Engineering Graduation</h4>
-        <p class="text-sm">Completed degree with focus on computer science and foundational software skills.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Skills -->
-  <div>
-    <h3 class="text-2xl font-bold mb-4 gradient-text">Skills</h3>
-    <div class="space-y-4">
-      <div>
-        <label class="font-medium">AWS</label>
-        <div class="w-full bg-gray-300 rounded-full h-4 overflow-hidden">
-          <div class="bg-yellow-400 h-full animate-pulse" style="width: 90%"></div>
+      <div class="space-y-4">
+        <div>
+          <label class="font-medium">AWS</label>
+          <div class="w-full bg-gray-300 rounded-full h-4 overflow-hidden">
+            <div class="bg-yellow-400 h-full animate-pulse" style="width: 90%"></div>
+          </div>
         </div>
-      </div>
-      <div>
-        <label class="font-medium">Terraform</label>
-        <div class="w-full bg-gray-300 rounded-full h-4 overflow-hidden">
-          <div class="bg-indigo-500 h-full animate-pulse" style="width: 85%"></div>
+        <div>
+          <label class="font-medium">Terraform</label>
+          <div class="w-full bg-gray-300 rounded-full h-4 overflow-hidden">
+            <div class="bg-indigo-500 h-full animate-pulse" style="width: 85%"></div>
+          </div>
         </div>
-      </div>
-      <div>
-        <label class="font-medium">Ansible</label>
-        <div class="w-full bg-gray-300 rounded-full h-4 overflow-hidden">
-          <div class="bg-red-400 h-full animate-pulse" style="width: 80%"></div>
+        <div>
+          <label class="font-medium">Ansible</label>
+          <div class="w-full bg-gray-300 rounded-full h-4 overflow-hidden">
+            <div class="bg-red-400 h-full animate-pulse" style="width: 80%"></div>
+          </div>
         </div>
-      </div>
-      <div>
-        <label class="font-medium">Docker & Kubernetes</label>
-        <div class="w-full bg-gray-300 rounded-full h-4 overflow-hidden">
-          <div class="bg-blue-500 h-full animate-pulse" style="width: 75%"></div>
+        <div>
+          <label class="font-medium">Docker & Kubernetes</label>
+          <div class="w-full bg-gray-300 rounded-full h-4 overflow-hidden">
+            <div class="bg-blue-500 h-full animate-pulse" style="width: 75%"></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
 
 
     <footer id="contact" class="bg-white text-black text-center py-4 px-2">
